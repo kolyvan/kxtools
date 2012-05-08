@@ -44,6 +44,9 @@
     #define KX_AUTORELEASING __autoreleasing
     #define KX_UNSAFE_UNRETAINED __unsafe_unretained
 
+    #define KX_AUTORELEASE_POOL_BEGIN() @autoreleasepool {
+    #define KX_AUTORELEASE_POOL_END() }
+
 #else
 
     #define KX_RETAIN(x)            ([(x) retain])
@@ -58,6 +61,9 @@
     #define KX_BLOCK __block
     #define KX_AUTORELEASING
     #define KX_UNSAFE_UNRETAINED
+
+    #define KX_AUTORELEASE_POOL_BEGIN() NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    #define KX_AUTORELEASE_POOL_END()   [pool drain];
 
 #endif
 

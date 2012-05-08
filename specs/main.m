@@ -7,16 +7,18 @@
 //
 
 #import <Cedar/Cedar.h>
+#import "KxArc.h"
 
 int main(int argc, const char * argv[])
 {
     int result = 0;
+    
+    KX_AUTORELEASE_POOL_BEGIN()
 
-    @autoreleasepool {
+    result = runSpecs();
         
-      result = runSpecs();
-        
-    }
+    KX_AUTORELEASE_POOL_END()
+    
     return result;
 }
 

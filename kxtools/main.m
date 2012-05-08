@@ -30,16 +30,12 @@
 
 int main (int argc, const char * argv[])
 {
-#if __has_feature(objc_arc)    
-    @autoreleasepool {
-      
-        
-    }
-#else
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    KX_AUTORELEASE_POOL_BEGIN()
     
-    [pool drain];
-#endif    
+    
+    
+    KX_AUTORELEASE_POOL_END()
+      
     return 0;
 }
 
