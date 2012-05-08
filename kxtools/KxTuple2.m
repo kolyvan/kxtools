@@ -1,0 +1,120 @@
+//
+//  ru.kolyvan.repo
+//  https://github.com/kolyvan
+//  
+
+//  Copyright (C) 2012, Konstantin Boukreev (Kolyvan)
+
+//  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+//  The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+#import "KxTuple2.h"
+#import "KxUtils.h"
+
+
+@implementation KxTuple2
+
+@synthesize first = _first;
+@synthesize second = _second;
+
++ (KxTuple2 *) first:(id) first second:(id) second
+{
+    return [[[KxTuple2 alloc] initWithFirst:first andSecond:second] autorelease];
+}
+
+- (id) initWithFirst: (id) first andSecond: (id) second
+{
+    self = [super init];
+    if (self) {
+        _first = [first retain];
+        _second = [second retain];        
+    }    
+    return self;
+}
+
+- (void) dealloc
+{
+    [_first release];
+    [_second release];
+    [super dealloc];
+}
+
+- (KxTuple2 *) swap
+{
+    return [[[KxTuple2 alloc] initWithFirst:_second andSecond:_first] autorelease];
+}
+
+- (NSString *) description
+{
+    return KxUtils.format(@"(%@,%@)", _first, _second);
+}
+
+- (id) copyWithZone:(NSZone *) zone 
+{
+	return [[KxTuple2 allocWithZone:zone] initWithFirst:_first andSecond:_second];    
+}
+
+- (BOOL) isEqual:(id) other 
+{
+	if (self == other)
+		return YES;
+    
+	if (![other isKindOfClass:[KxTuple2 class]])
+		return NO;
+    
+    KxTuple2 * p = (KxTuple2 *)other;
+    
+	return [_first isEqual:p->_first] && [_second isEqual:p->_second];
+}
+
+- (NSUInteger) hash 
+{
+	return [_first hash] * 31 + [_second hash];
+}
+
+
+
+
+#pragma mark - NSCoding
+
+- (id) initWithCoder: (NSCoder*)coder
+{
+	if ([coder versionForClassName: [self className]] != 0)
+	{ 
+		[self release];
+		return nil;
+	}
+	if ([coder allowsKeyedCoding])
+	{
+		_first   = [[coder decodeObjectForKey: @"first"] retain];
+		_second  = [[coder decodeObjectForKey: @"second"] retain];        
+	}
+	else
+	{
+		_first   = [[coder decodeObject] retain];
+		_second  = [[coder decodeObject] retain];        
+	}
+    
+	return self;
+}
+- (void) encodeWithCoder: (NSCoder*)coder
+{
+	if ([coder allowsKeyedCoding])
+	{
+        [coder encodeObject:_first  forKey:@"first"];
+        [coder encodeObject:_second forKey:@"second"];
+	}
+	else
+	{
+        [coder encodeObject:_first];
+        [coder encodeObject:_second];
+    }    
+}
+
+
+
+@end
