@@ -14,14 +14,16 @@
 
 #import <Foundation/Foundation.h>
 
+#import "KxArc.h"
+
 @interface KxTuple2 : NSObject<NSCopying, NSCoding> { 
 @private
     id _first;
     id _second;            
 }
 
-@property (nonatomic, readonly, retain) id first;
-@property (nonatomic, readonly, retain) id second;
+@property (nonatomic, readonly, KX_PROP_STRONG) id first;
+@property (nonatomic, readonly, KX_PROP_STRONG) id second;
 
 + (KxTuple2 *) first:(id) first second:(id) second;
 

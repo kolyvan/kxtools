@@ -71,6 +71,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8771A6691558E782001BB718 /* KxArc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KxArc.h; sourceTree = "<group>"; };
 		87BD445015580EC70004853F /* kxtools */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = kxtools; sourceTree = BUILT_PRODUCTS_DIR; };
 		87BD445415580EC70004853F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		87BD445715580EC70004853F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -175,6 +176,7 @@
 				87BD446D15580F7B0004853F /* KxList.h */,
 				87BD446E15580F7B0004853F /* KxList.m */,
 				87BD446F15580F7B0004853F /* KxMacros.h */,
+				8771A6691558E782001BB718 /* KxArc.h */,
 				87BD447015580F7B0004853F /* KxTuple2.h */,
 				87BD447115580F7B0004853F /* KxTuple2.m */,
 				87BD447215580F7B0004853F /* KxUtils.h */,
@@ -390,6 +392,7 @@
 		87BD446015580EC70004853F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Frameworks\"",
@@ -403,6 +406,7 @@
 		87BD446115580EC70004853F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Frameworks\"",
@@ -416,6 +420,7 @@
 		87BD449D15580FB50004853F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Frameworks\"",
@@ -429,6 +434,7 @@
 		87BD449E15580FB50004853F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Frameworks\"",
@@ -458,6 +464,7 @@
 				87BD446115580EC70004853F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		87BD449C15580FB50004853F /* Build configuration list for PBXNativeTarget "specs" */ = {
 			isa = XCConfigurationList;
@@ -466,6 +473,7 @@
 				87BD449E15580FB50004853F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

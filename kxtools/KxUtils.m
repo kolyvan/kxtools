@@ -37,7 +37,8 @@
 #import "KxUtils.h"
 #import "KxTuple2.h"
 #import "KxList.h"
-
+#import "KxMacros.h"
+#import "KxArc.h"
 
 static NSString * completeErrorMessage (NSError * error) 
 {    
@@ -65,7 +66,8 @@ static NSString * completeErrorMessage (NSError * error)
 
 static NSFileManager * fileManager() 
 {
-    return [[[NSFileManager alloc] init] autorelease];
+    NSFileManager *fm = [[NSFileManager alloc] init];
+    return KX_AUTORELEASE(fm);
 }
 
 static NSError * ensureDirectory(NSString * path) 
@@ -75,7 +77,7 @@ static NSError * ensureDirectory(NSString * path)
     if ([fm fileExistsAtPath:path])
         return nil;
     
-    NSError * error = nil;
+    NSError * KX_AUTORELEASING error = nil;
     [fm createDirectoryAtPath:path
   withIntermediateDirectories:YES 
                    attributes:nil 
@@ -298,7 +300,7 @@ static NSString * format (NSString * fmt, ...)
     va_start(args, fmt);
     NSString * s = [[NSString alloc] initWithFormat:fmt arguments:args];
     va_end(args);
-    return [s autorelease];
+    return KX_AUTORELEASE(s);
 };
 
 static KxTuple2 * tuple(id first, id second)

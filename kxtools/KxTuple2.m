@@ -14,7 +14,8 @@
 
 #import "KxTuple2.h"
 #import "KxUtils.h"
-
+#define NSNUMBER_SHORTHAND 
+#import "KxMacros.h"
 
 @implementation KxTuple2
 
@@ -23,29 +24,31 @@
 
 + (KxTuple2 *) first:(id) first second:(id) second
 {
-    return [[[KxTuple2 alloc] initWithFirst:first andSecond:second] autorelease];
+    KxTuple2 *r = [[KxTuple2 alloc] initWithFirst:first andSecond:second];
+    return KX_AUTORELEASE(r);
 }
 
 - (id) initWithFirst: (id) first andSecond: (id) second
 {
     self = [super init];
     if (self) {
-        _first = [first retain];
-        _second = [second retain];        
+        _first = KX_RETAIN(first);
+        _second = KX_RETAIN(second);        
     }    
     return self;
 }
 
 - (void) dealloc
 {
-    [_first release];
-    [_second release];
-    [super dealloc];
+    KX_RELEASE(_first);
+    KX_RELEASE(_second);
+    KX_SUPER_DEALLOC();
 }
 
 - (KxTuple2 *) swap
 {
-    return [[[KxTuple2 alloc] initWithFirst:_second andSecond:_first] autorelease];
+    KxTuple2 *r = [[KxTuple2 alloc] initWithFirst:_second andSecond:_first];
+    return KX_AUTORELEASE(r);
 }
 
 - (NSString *) description
@@ -85,18 +88,18 @@
 {
 	if ([coder versionForClassName: [self className]] != 0)
 	{ 
-		[self release];
+		KX_RELEASE(self);
 		return nil;
 	}
 	if ([coder allowsKeyedCoding])
 	{
-		_first   = [[coder decodeObjectForKey: @"first"] retain];
-		_second  = [[coder decodeObjectForKey: @"second"] retain];        
+		_first   = KX_RETAIN([coder decodeObjectForKey: @"first"]);
+		_second  = KX_RETAIN([coder decodeObjectForKey: @"second"]);        
 	}
 	else
 	{
-		_first   = [[coder decodeObject] retain];
-		_second  = [[coder decodeObject] retain];        
+		_first   = KX_RETAIN([coder decodeObject]);
+		_second  = KX_RETAIN([coder decodeObject]);        
 	}
     
 	return self;

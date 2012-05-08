@@ -14,9 +14,10 @@
 
 #import "KxTuple2.h"
 #import "NSArray+Kolyvan.h"
+#import "KxUtils.h"
+#import "KxArc.h"
 #define NSNUMBER_SHORTHAND 
 #import "KxMacros.h"
-#import "KxUtils.h"
 
 @implementation NSArray (Kolyvan)
 
@@ -327,9 +328,9 @@
     if (self.isEmpty)
         return nil;
     
-    id result = [[self.last retain] autorelease];
+    id result = KX_RETAIN(self.last);
     [self removeLastObject];
-    return result;
+    return KX_AUTORELEASE(result);
 }
 
 @end

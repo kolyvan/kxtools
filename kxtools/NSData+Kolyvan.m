@@ -30,7 +30,9 @@
 //
 //
 
+#import "KxMacros.h"
 #import "NSData+Kolyvan.h"
+#import "KxArc.h"
 
 static NSData * base64encode(NSData * from)
 {    
@@ -188,9 +190,9 @@ static NSData * base64decode (NSData * from)
 
 - (NSString *) base64EncodedString
 {
-   return [[[NSString alloc] initWithData:base64encode(self)
-                                 encoding:NSASCIIStringEncoding] autorelease];    
-
+    NSString *s = [[NSString alloc] initWithData:base64encode(self)
+                                        encoding:NSASCIIStringEncoding];
+    return KX_AUTORELEASE(s);    
 }
 
 @end

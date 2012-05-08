@@ -64,7 +64,7 @@ describe(@"NSDictionary (Kolyvan)", ^{
     
     it(@"mutable update", ^{
         
-        NSMutableDictionary *md = [[[NSMutableDictionary alloc] init] autorelease];
+        NSMutableDictionary *md = KX_AUTORELEASE([[NSMutableDictionary alloc] init]);
         
         [md update: @"red" value: @"apple"];
         assertThat([md get: @"red"], equalTo(@"apple"));
@@ -100,7 +100,7 @@ describe(@"NSDictionary (Kolyvan)", ^{
     
     it(@"get:orSet:", ^{
         
-        NSMutableDictionary *md = [[[NSMutableDictionary alloc] init] autorelease];
+        NSMutableDictionary *md = KX_AUTORELEASE([[NSMutableDictionary alloc] init]);
         
         [md get:@"red" orSet: ^{ return (id)nil; }];
         assertThat([md get: @"red"], equalTo(nil));        

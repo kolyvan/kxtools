@@ -15,6 +15,8 @@
 
 #import <Foundation/Foundation.h>
 
+#if ! __has_feature(objc_arc)
+//#warning This file must be compiled without ARC. Use -fno-objc-arc flag.
 
 typedef struct {
    
@@ -68,6 +70,8 @@ typedef struct {
 } KxAnsiCodes_t;
 
 extern KxAnsiCodes_t KxAnsiCodes;
+
+#endif
 
 typedef struct {
     

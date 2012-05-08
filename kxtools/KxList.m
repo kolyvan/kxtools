@@ -40,12 +40,12 @@
 
 - (id) head 
 {
-    return [[_head retain] autorelease];
+    return KX_AUTORELEASE(KX_RETAIN(_head));
 }
 
 - (KxList *) tail
 {
-    return [[_tail retain] autorelease];
+    return KX_AUTORELEASE(KX_RETAIN(_tail));
 }
 
 - (id) last 
@@ -56,7 +56,7 @@
         r = p->_head;
         p = p->_tail;
     }    
-    return [[r retain] autorelease];
+    return KX_AUTORELEASE(KX_RETAIN(r));
 }
 
 - (KxList *) butlast
@@ -81,8 +81,8 @@
     
     self = [super init];
     if (self) {
-        _head = [x retain];
-        _tail = [xs retain];
+        _head = KX_RETAIN(x);
+        _tail = KX_RETAIN(xs);
     }
     
     return self;    
@@ -90,15 +90,16 @@
 
 - (void)dealloc
 {
-    [_head release];
-    [_tail release];    
-    [super dealloc];
+    KX_RELEASE(_head);
+    KX_RELEASE(_tail);    
+    KX_SUPER_DEALLOC();
 }
 
 
 + (KxList *) head: (id)x tail: (KxList *) xs
 {
-    return [[[KxList alloc] initWithHead:x andTail:xs] autorelease];
+    KxList *l = [[KxList alloc] initWithHead:x andTail:xs];
+    return KX_AUTORELEASE(l);
 }
 
 + (KxList *) fromArray: (NSArray *) array
@@ -172,7 +173,7 @@
     id newhead = [_head copy];
     KxList* result =  [[KxList allocWithZone:zone] initWithHead: newhead 
                                                         andTail: newtail];    
-    [newhead release];
+    KX_RELEASE(newhead);
 	return result;
 }
 
@@ -233,7 +234,8 @@
 
 - (KxList *) cons: (id)x
 {
-    return [[[KxList alloc] initWithHead:x andTail:self] autorelease];
+    KxList *l = [[KxList alloc] initWithHead:x andTail:self];
+    return KX_AUTORELEASE(l);
 }
 
 - (KxList *) concat: (KxList *)xs
@@ -496,11 +498,11 @@
 }
 
 - (NSUInteger) countByEnumeratingWithState: (NSFastEnumerationState *)state 
-                                   objects:(id *)stackbuf 
+                                   objects:(id KX_UNSAFE_UNRETAINED [])stackbuf 
                                      count:(NSUInteger)len
 {
     NSUInteger count = 0;
-    KxList * p;
+    KX_UNSAFE_UNRETAINED KxList * p;
     
     if (!state->state)
     {
@@ -510,7 +512,12 @@
     }
     else 
     {
+    #if __has_feature(objc_arc)
+        void * pp = (void *)state->extra[1];    
+        p = (__bridge KxList *)pp;
+    #else
         p = (KxList *)state->extra[1];    
+    #endif
     }
      
     if (p)
@@ -536,7 +543,7 @@
 {
 	if ([coder versionForClassName: [self className]] != 0)
 	{ 
-		[self release];
+		KX_RELEASE(self);
 		return nil;
 	}
 
@@ -545,13 +552,13 @@
     
     if ([coder allowsKeyedCoding])
 	{
-		_head  = [[coder decodeObjectForKey: @"head"] retain];        
-		_tail  = [[KxList fromArray: [coder decodeObjectForKey: @"tail"]] retain];
+		_head  = KX_RETAIN([coder decodeObjectForKey: @"head"]);        
+		_tail  = KX_RETAIN([KxList fromArray: [coder decodeObjectForKey: @"tail"]]);
 	}
 	else
 	{
-		_head  = [[coder decodeObject] retain];        
-		_tail  = [[KxList fromArray: [coder decodeObject]] retain];
+		_head  = KX_RETAIN([coder decodeObject]);        
+		_tail  = KX_RETAIN([KxList fromArray: [coder decodeObject]]);
 	}
     
     return self;

@@ -30,10 +30,16 @@
 
 int main (int argc, const char * argv[])
 {
+#if __has_feature(objc_arc)    
     @autoreleasepool {
       
         
     }
+#else
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
+    [pool drain];
+#endif    
     return 0;
 }
 

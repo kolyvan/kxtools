@@ -13,7 +13,7 @@
 
 
 #import <Foundation/Foundation.h>
-
+#import "KxArc.h"
 
 @interface KxList : NSObject<NSCopying, NSCoding, NSFastEnumeration> {
     id _head;
@@ -21,8 +21,8 @@
 @private
 }
 
-@property (readonly, nonatomic, retain) id head;
-@property (readonly, nonatomic, retain) KxList * tail;
+@property (readonly, nonatomic, KX_PROP_STRONG) id head;
+@property (readonly, nonatomic, KX_PROP_STRONG) KxList * tail;
 
 - (NSInteger) count;
 - (id) last; 

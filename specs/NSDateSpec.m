@@ -12,7 +12,7 @@
 #import <OCHamcrest/OCHamcrest.h>
 
 #import "NSDate+Kolyvan.h"
-
+#import "KxArc.h"
 
 SPEC_BEGIN(NSDateKolyvan)
 describe(@"NSDate (Kolyvan)", ^{    
@@ -25,7 +25,7 @@ describe(@"NSDate (Kolyvan)", ^{
         NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
         [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
         foolsDay = [formatter dateFromString:@"2012-04-01 11:41:21"];
-        [formatter release];
+        KX_RELEASE(formatter);
         
         NSAssert(foolsDay, @"date formatter failed!");
         

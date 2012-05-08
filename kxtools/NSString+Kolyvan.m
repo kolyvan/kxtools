@@ -35,7 +35,7 @@
 #import "KxTuple2.h"
 #define NSNUMBER_SHORTHAND
 #import "KxMacros.h"
-
+#import "KxArc.h"
 
 @implementation NSString (Kolyvan)
 
@@ -45,25 +45,24 @@
 
 + (NSString *) uniqueString
 {
-
-    // [[NSProcessInfo processInfo] globallyUniqueString] 
 	CFUUIDRef uuidObj = CFUUIDCreate(nil);
-    // todod: ARC	NSString *uuidString = (__bridge_transfer NSString*)CFUUIDCreateString(nil, uuidObj);
-    NSString *uuidString = (NSString* )CFUUIDCreateString(nil, uuidObj);
+    NSString *uuidString = (NSString* )CFBridgingRelease(CFUUIDCreateString(nil, uuidObj));
 	CFRelease(uuidObj);
-	return [uuidString autorelease];
+	return KX_AUTORELEASE(uuidString);
 }
 
 + (NSString *) stringFromAsciiBytes: (NSData *) data
 {
-    return [[[NSString alloc] initWithData:data
-                                  encoding:NSASCIIStringEncoding] autorelease];
+    NSString *s =  [[NSString alloc] initWithData:data
+                                         encoding:NSASCIIStringEncoding];
+    return  KX_AUTORELEASE(s);
 }
 
 + (NSString *) stringFromUtf8Bytes: (NSData *) data
 {
-    return [[[NSString alloc] initWithData:data
-                                  encoding:NSUTF8StringEncoding] autorelease];    
+    NSString *s = [[NSString alloc] initWithData:data
+                                        encoding:NSUTF8StringEncoding];
+    return KX_AUTORELEASE(s);
 }
 
 - (unichar) first
@@ -216,7 +215,7 @@
 		}
 	}
 	
-    [target release];
+    KX_RELEASE(target);
 	return s;
 }
 
