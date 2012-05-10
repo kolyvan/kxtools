@@ -80,7 +80,16 @@
 + (NSDate *) dateWithAltRSSDateString:(NSString *) str;     // alternative RSS: 'd MMM yyyy HH:mm:ss ZZZ'
 + (NSDate *) dateWithHTTPDateString:(NSString *) str; 
 
-+ (NSDate *) date:(NSString *) string format:(NSString* ) format locale:(NSLocale *)locale;
++ (NSDate *) date:(NSString *) string 
+           format:(NSString* ) format 
+           locale:(NSLocale *)locale
+         timeZone:(NSTimeZone *) tz;
+
++ (NSDate *) date:(NSString *) string 
+           format:(NSString* ) format 
+           locale:(NSLocale *)locale;
+
+
 + (NSDate *) dateWithLongDateTimeString:(NSString *) str locale:(NSLocale *)locale;
 
 //// to string

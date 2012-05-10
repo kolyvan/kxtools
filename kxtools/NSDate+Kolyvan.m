@@ -263,10 +263,20 @@ static inline NSCalendar* currentCal() { return [NSCalendar currentCalendar]; }
 
 + (NSDate *) date:(NSString*) string format:(NSString* ) format
 {
-    return [self date: string format: format locale: nil];
+    return [self date: string format: format locale: nil timeZone:nil];
 }
 
-+ (NSDate *) date:(NSString *) string format:(NSString* ) format locale:(NSLocale *)locale
++ (NSDate *) date:(NSString *) string 
+           format:(NSString* ) format 
+           locale:(NSLocale *)locale
+{
+    return [self date: string format: format locale: locale timeZone:nil];    
+}
+
++ (NSDate *) date:(NSString *) string 
+           format:(NSString* ) format 
+           locale:(NSLocale *)locale          
+         timeZone:(NSTimeZone *) tz
 {
     if (!string) 
         return nil;
@@ -275,6 +285,9 @@ static inline NSCalendar* currentCal() { return [NSCalendar currentCalendar]; }
     
     if (locale)
         [formatter setLocale:locale];    
+    
+    if (tz)
+        [formatter setTimeZone:tz];
     
     [formatter setDateFormat:format];    
     
