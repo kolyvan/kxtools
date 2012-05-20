@@ -43,8 +43,6 @@
 ////
 
 #define locString(s) NSLocalizedString(s,s)
-#define locStringFmt(s,...) [NSString stringWithFormat:NSLocalizedString(s,s),##__VA_ARGS__]
-
 
 //#define BugCheck(s) NSCAssert(false, (s))
 
