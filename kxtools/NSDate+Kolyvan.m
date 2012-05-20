@@ -441,24 +441,17 @@ static inline NSCalendar* currentCal() { return [NSCalendar currentCalendar]; }
         return locString(@"now");	
     
     if (seconds < 60)
-        return [NSString stringWithFormat: inPast ? @"%ds" : @"+%ds", seconds];
+        return [NSString stringWithFormat: inPast ? @"%ds" : @"+%ds", (int)seconds];
     
     int minutes = round(seconds/60);
     
     if (minutes < 75)
         return [NSString stringWithFormat: inPast ? @"%dm" : @"+%dm", minutes];
     
-    int hours = round(seconds / 3600);
+    if ([self isToday]) 
+        return [self formattedDatePattern:@"today HH:mm" timeZone:nil];    
     
-    if (hours < 24)
-        return [NSString stringWithFormat: inPast ? @"%dh" : @"+%dh", hours];
-    
-    NSInteger days = round(seconds / 86400);    
-    if (days < 356)
-        return [NSString stringWithFormat: inPast ? @"%dd" : @"+%dd", days];    
-    
-    NSInteger years = round(seconds / (86400 * 356));
-    return [NSString stringWithFormat: inPast ? @"%dy" : @"+%dy", years];    
+    return [self dateFormatted];	
 }
 
 - (NSString*) daysRelativeFormatted
