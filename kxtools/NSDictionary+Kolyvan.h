@@ -19,7 +19,6 @@
 
 @property(nonatomic,readonly,getter=isEmpty) BOOL isEmpty;
 @property(nonatomic,readonly,getter=nonEmpty) BOOL nonEmpty;
-@property(nonatomic,readonly) NSUInteger count;
 
 - (BOOL) isEmpty; 
 - (BOOL) nonEmpty;

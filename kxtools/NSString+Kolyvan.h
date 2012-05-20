@@ -20,7 +20,6 @@
 
 @property(nonatomic,readonly,getter=isEmpty) BOOL isEmpty;
 @property(nonatomic,readonly,getter=nonEmpty) BOOL nonEmpty;
-@property(nonatomic,readonly) NSUInteger length;
 @property(nonatomic,readonly) unichar first;
 @property(nonatomic,readonly) unichar last;
 

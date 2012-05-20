@@ -39,7 +39,6 @@
 
 @implementation NSString (Kolyvan)
 
-@dynamic length;
 @dynamic first;
 @dynamic last;
 

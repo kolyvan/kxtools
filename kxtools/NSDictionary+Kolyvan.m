@@ -19,8 +19,6 @@
 
 @implementation NSDictionary (Kolyvan)
 
-@dynamic count;
-
 - (BOOL) isEmpty 
 {
     return [self count] == 0;

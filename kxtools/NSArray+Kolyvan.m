@@ -21,7 +21,6 @@
 
 @implementation NSArray (Kolyvan)
 
-@dynamic count;
 
 - (BOOL) isEmpty 
 {

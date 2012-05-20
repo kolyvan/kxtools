@@ -23,7 +23,6 @@
 @property(nonatomic,readonly) id first;
 @property(nonatomic,readonly) id second;
 @property(nonatomic,readonly) id last;
-@property(nonatomic,readonly) NSUInteger count;
 
 - (BOOL) isEmpty; 
 - (BOOL) nonEmpty;
