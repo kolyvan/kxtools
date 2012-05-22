@@ -43,6 +43,7 @@
 #import "NSDate+Kolyvan.h"
 #import "KxMacros.h"
 #import "KxArc.h"
+#import "KxUtils.h"
 
 #define YMD_COMPONENTS NSMonthCalendarUnit|NSDayCalendarUnit|NSYearCalendarUnit
 #define HMS_COMPONENTS NSMinuteCalendarUnit|NSSecondCalendarUnit|NSHourCalendarUnit
@@ -449,7 +450,7 @@ static inline NSCalendar* currentCal() { return [NSCalendar currentCalendar]; }
         return [NSString stringWithFormat: inPast ? @"%dm" : @"+%dm", minutes];
     
     if ([self isToday]) 
-        return [self formattedDatePattern:@"today HH:mm" timeZone:nil];    
+        return KxUtils.format(locString(@"today %@"), [self formattedDatePattern:@"HH:mm" timeZone:nil]);    
     
     return [self dateFormatted];	
 }
