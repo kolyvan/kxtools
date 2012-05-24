@@ -170,7 +170,15 @@ describe(@"NSDate (Kolyvan)", ^{
         td = [NSDate dateWithHTTPDateString:@"Sun Nov  6 08:49:37 1994"]; 
         assertThat(td, equalTo(date));        
     });
-     
+    
+    it(@"compare", ^{
+        
+        assertThatBool([today isLess:[today addDays:+1]], equalToBool(YES));
+        assertThatBool([today isLess:[today addDays:-1]], equalToBool(NO));
+        assertThatBool([today isGreater:[today addDays:+1]], equalToBool(NO));                
+        assertThatBool([today isGreater:[today addDays:-1]], equalToBool(YES));                
+        
+    });
     
 });
 SPEC_END

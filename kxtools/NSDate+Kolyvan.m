@@ -193,6 +193,16 @@ static inline NSCalendar* currentCal() { return [NSCalendar currentCalendar]; }
     return [self compare:[NSDate date]] == NSOrderedAscending; 
 }
 
+- (BOOL) isLess: (NSDate *) other
+{
+    return [self compare:other] == NSOrderedAscending;
+}
+
+- (BOOL) isGreater: (NSDate *) other
+{
+    return [self compare:other] == NSOrderedDescending;    
+}
+
 - (NSInteger) daysBetweenDate:(NSDate *) other;
 { 
 //    NSDateComponents *comps = [currentCal() components:NSDayCalendarUnit 

@@ -52,6 +52,9 @@
 - (BOOL) isYesterday;
 - (BOOL) isTomorrow;
 
+- (BOOL) isLess: (NSDate *) other;
+- (BOOL) isGreater: (NSDate *) other;
+
 - (NSInteger) daysBetweenDate:(NSDate *) other;
 - (NSInteger) dayOfYear;
 
