@@ -70,6 +70,14 @@ static NSFileManager * fileManager()
     return KX_AUTORELEASE(fm);
 }
 
+static BOOL fileExists(NSString *filepath)
+{    
+    NSFileManager *fm = [[NSFileManager alloc] init];    
+    BOOL exists = [fm fileExistsAtPath:filepath];    
+    KX_RELEASE(fm);
+    return exists;
+}
+
 static NSError * ensureDirectory(NSString * path) 
 {
     NSFileManager * fm = fileManager();    
@@ -326,6 +334,7 @@ static KxList* list(id head, ...)
 
 KxUtils_t KxUtils = {
     fileManager,
+    fileExists,
     ensureDirectory,    
 #ifndef __IPHONE_OS_VERSION_MAX_ALLOWED
     appBundleID,

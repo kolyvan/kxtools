@@ -23,6 +23,7 @@ typedef struct {
     // file managers and path
     
     NSFileManager * (*fileManager)();
+    BOOL (*fileExists)(NSString *filepath); 
     NSError * (*ensureDirectory)(NSString * path);
     
 #ifndef __IPHONE_OS_VERSION_MAX_ALLOWED
