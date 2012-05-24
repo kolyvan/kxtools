@@ -85,8 +85,8 @@
 #pragma mark - NSCoding
 
 - (id) initWithCoder: (NSCoder*)coder
-{
-	if ([coder versionForClassName: [self className]] != 0)
+{    
+   	if ([coder versionForClassName: NSStringFromClass([self class])] != 0) 
 	{ 
 		KX_RELEASE(self);
 		return nil;

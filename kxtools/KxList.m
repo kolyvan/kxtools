@@ -225,7 +225,7 @@
 {
     KxList * p = self;    
     while (p) {
-        if ([p->_head isEqualTo:elem])
+        if ([p->_head isEqual:elem])
             return YES;
         p = p->_tail;
     }
@@ -541,15 +541,12 @@
 
 - (id) initWithCoder: (NSCoder*)coder
 {
-	if ([coder versionForClassName: [self className]] != 0)
+   	if ([coder versionForClassName: NSStringFromClass([self class])] != 0)         
 	{ 
 		KX_RELEASE(self);
 		return nil;
 	}
-
-   // [self release];
-   // self = [KxList fromArray: [[NSArray alloc] initWithCoder: coder]];    
-    
+   
     if ([coder allowsKeyedCoding])
 	{
 		_head  = KX_RETAIN([coder decodeObjectForKey: @"head"]);        

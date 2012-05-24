@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		87BD445515580EC70004853F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87BD445415580EC70004853F /* Foundation.framework */; };
-		87BD445815580EC70004853F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BD445715580EC70004853F /* main.m */; };
-		87BD445C15580EC70004853F /* kxtools.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 87BD445B15580EC70004853F /* kxtools.1 */; };
 		87BD448215580F7B0004853F /* KxCast.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BD446A15580F7B0004853F /* KxCast.m */; };
 		87BD448315580F7B0004853F /* KxConsole.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BD446C15580F7B0004853F /* KxConsole.m */; };
 		87BD448415580F7B0004853F /* KxList.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BD446E15580F7B0004853F /* KxList.m */; };
@@ -53,7 +51,6 @@
 			dstPath = /usr/share/man/man1/;
 			dstSubfolderSpec = 0;
 			files = (
-				87BD445C15580EC70004853F /* kxtools.1 in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
@@ -74,9 +71,6 @@
 		8771A6691558E782001BB718 /* KxArc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KxArc.h; sourceTree = "<group>"; };
 		87BD445015580EC70004853F /* kxtools */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = kxtools; sourceTree = BUILT_PRODUCTS_DIR; };
 		87BD445415580EC70004853F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		87BD445715580EC70004853F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		87BD445A15580EC70004853F /* kxtools-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "kxtools-Prefix.pch"; sourceTree = "<group>"; };
-		87BD445B15580EC70004853F /* kxtools.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = kxtools.1; sourceTree = "<group>"; };
 		87BD446315580F3E0004853F /* Cedar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cedar.framework; path = Frameworks/Cedar.framework; sourceTree = "<group>"; };
 		87BD446415580F3E0004853F /* OCHamcrest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCHamcrest.framework; path = Frameworks/OCHamcrest.framework; sourceTree = "<group>"; };
 		87BD446915580F7B0004853F /* KxCast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KxCast.h; sourceTree = "<group>"; };
@@ -201,9 +195,6 @@
 		87BD445915580EC70004853F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				87BD445715580EC70004853F /* main.m */,
-				87BD445B15580EC70004853F /* kxtools.1 */,
-				87BD445A15580EC70004853F /* kxtools-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -301,7 +292,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				87BD445815580EC70004853F /* main.m in Sources */,
 				87BD448215580F7B0004853F /* KxCast.m in Sources */,
 				87BD448315580F7B0004853F /* KxConsole.m in Sources */,
 				87BD448415580F7B0004853F /* KxList.m in Sources */,
