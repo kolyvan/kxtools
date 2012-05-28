@@ -40,6 +40,10 @@
 #import "KxMacros.h"
 #import "KxArc.h"
 
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#include <sys/xattr.h>
+#endif
+
 static NSString * completeErrorMessage (NSError * error) 
 {    
     NSMutableString *message = [[NSString stringWithFormat:@"%@ (%@/%ld)", 
