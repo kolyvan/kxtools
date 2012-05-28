@@ -49,6 +49,7 @@
 - (id) foldRight: (id) start with: (id (^)(id elem, id acc)) block;
 - (NSArray *) filter: (BOOL(^)(id elem)) block;
 - (NSArray *) filterNot: (BOOL(^)(id elem)) block;
+- (KxTuple2 *) partition: (BOOL(^)(id elem)) block;
 - (id) find: (BOOL(^)(id elem)) block;
 - (BOOL) exists: (BOOL(^)(id elem)) block;
 

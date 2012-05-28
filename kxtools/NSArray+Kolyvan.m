@@ -158,6 +158,20 @@
     return [self filter: ^(id elem){ return (BOOL)!block(elem); }];
 }
 
+- (KxTuple2 *) partition: (BOOL(^)(id elem)) block
+{
+    NSMutableArray *acc = [NSMutableArray arrayWithCapacity:self.count];
+    NSMutableArray *accNot = [NSMutableArray arrayWithCapacity:self.count];    
+    
+    for (id elem in self)
+        if (block(elem))
+            [acc addObject:elem];
+        else
+            [accNot addObject:elem];
+    
+    return [KxTuple2 first:[acc toArray] second:[accNot toArray]];
+}
+
 - (id) find: (BOOL(^)(id elem)) block 
 {
     for (id elem in self)

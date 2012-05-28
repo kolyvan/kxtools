@@ -81,13 +81,24 @@ describe(@"NSArray (Kolyvan)", ^{
                    equalTo($integer(25)));
     });
     
-    
     it(@"filter, filterNot", ^{
         
         assertThat([array filterNot: ^(id x) { return [x isEmpty]; }],
                    equalTo(KxUtils.array(@"primum",@"secundo",@"tertia",@"finem",nil)));
         
     });
+    
+    it(@"partition", ^{
+        
+        KxTuple2 *result = [array partition: ^(id x) { return (BOOL)([x length] > 5); }];
+        
+        assertThat(result.first,
+                   equalTo(KxUtils.array(@"primum", @"secundo", @"tertia", nil)));
+        
+        assertThat(result.second,
+                   equalTo(KxUtils.array(@"", @"finem", nil)));
+        
+    }); 
     
     it(@"find, exists", ^{
         
