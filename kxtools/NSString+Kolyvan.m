@@ -337,7 +337,7 @@
     // NSMutableArray *result = [NSMutableArray arrayWithCapacity:self.length];
     NSMutableArray * result = [NSMutableArray arrayWithCapacity:self.length];    
     for (int i = 0; i < self.length; ++i)
-        [result addObject: $uchar([self characterAtIndex: i])];    
+        [result addObject: $ushort([self characterAtIndex: i])];    
     return result;
 }
 

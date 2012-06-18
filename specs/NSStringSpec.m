@@ -152,10 +152,16 @@ describe(@"NSString (Kolyvan)", ^{
     
     it(@"toArray", ^{
 
-        assertThat(@"abcd".toArray, equalTo(KxUtils.array($uchar('a'), 
-                                                           $uchar('b'), 
-                                                           $uchar('c'), 
-                                                           $uchar('d'), nil)));
+        assertThat(@"abcd".toArray, equalTo(KxUtils.array($ushort('a'), 
+                                                          $ushort('b'), 
+                                                          $ushort('c'), 
+                                                          $ushort('d'), nil)));
+        
+        assertThat(@"АБВГ".toArray, equalTo(KxUtils.array($ushort(1040), 
+                                                          $ushort(1041), 
+                                                          $ushort(1042), 
+                                                          $ushort(1043), nil)));
+        
     });  
     
     it(@"first, last, tail, butlast, take, drop", ^{
