@@ -42,6 +42,7 @@
 		87BD44BE155810780004853F /* NSString+Kolyvan.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BD448115580F7B0004853F /* NSString+Kolyvan.m */; };
 		87BD44BF155811470004853F /* Cedar.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 87BD446315580F3E0004853F /* Cedar.framework */; };
 		87BD44C0155811490004853F /* OCHamcrest.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 87BD446415580F3E0004853F /* OCHamcrest.framework */; };
+		87CFB20715A9ABBD008CCD1D /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 87CFB20615A9ABBD008CCD1D /* libz.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -107,6 +108,7 @@
 		87BD44AA155810320004853F /* NSDictionarySpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDictionarySpec.m; sourceTree = "<group>"; };
 		87BD44AB155810320004853F /* NSStringSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSStringSpec.m; sourceTree = "<group>"; };
 		87BD44AC155810320004853F /* Tuple2Spec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tuple2Spec.m; sourceTree = "<group>"; };
+		87CFB20615A9ABBD008CCD1D /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +124,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87CFB20715A9ABBD008CCD1D /* libz.dylib in Frameworks */,
 				87BD449415580FB40004853F /* Foundation.framework in Frameworks */,
 				87BD44A4155810160004853F /* Cedar.framework in Frameworks */,
 				87BD44A51558101A0004853F /* OCHamcrest.framework in Frameworks */,
@@ -134,6 +137,7 @@
 		87BD444515580EC70004853F = {
 			isa = PBXGroup;
 			children = (
+				87CFB20615A9ABBD008CCD1D /* libz.dylib */,
 				87BD445615580EC70004853F /* kxtools */,
 				87BD449515580FB40004853F /* specs */,
 				87BD445315580EC70004853F /* Frameworks */,

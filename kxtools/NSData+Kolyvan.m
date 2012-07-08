@@ -13,7 +13,7 @@
 
 
 //
-//  base64 encoder\decodoer taken from:
+//  base64 encoder\decoder taken from:
 //
 // Copyright 2003-2009 Christian d'Heureuse,
 // Inventec Informatik AG, Zurich, Switzerland
@@ -33,6 +33,7 @@
 #import "KxMacros.h"
 #import "NSData+Kolyvan.h"
 #import "KxArc.h"
+#import <zlib.h>
 
 static NSData * base64encode(NSData * from)
 {    
@@ -193,6 +194,172 @@ static NSData * base64decode (NSData * from)
     NSString *s = [[NSString alloc] initWithData:base64encode(self)
                                         encoding:NSASCIIStringEncoding];
     return KX_AUTORELEASE(s);    
+}
+
+/*
+- (NSData *) gzip
+{
+	if ([self length] == 0) {
+        return self;
+    }
+    
+    z_stream zStream;
+    
+    zStream.zalloc = Z_NULL;
+    zStream.zfree = Z_NULL;
+    zStream.opaque = Z_NULL;
+    zStream.next_in = (Bytef *)[self bytes];
+    zStream.avail_in = [self length];
+    zStream.total_out = 0;
+    
+    if (deflateInit(&zStream, Z_DEFAULT_COMPRESSION) != Z_OK) {
+        return nil;
+    }
+    
+    NSUInteger compressionChunkSize = 16384; // 16Kb
+    NSMutableData *compressedData = [NSMutableData dataWithLength:compressionChunkSize];
+    
+    do {
+        if (zStream.total_out >= [compressedData length]) {
+            [compressedData increaseLengthBy:compressionChunkSize];
+        }
+        
+        zStream.next_out = [compressedData mutableBytes] + zStream.total_out;
+        zStream.avail_out = [compressedData length] - zStream.total_out;
+        
+        deflate(&zStream, Z_FINISH);
+        
+    } while (zStream.avail_out == 0);
+    
+    deflateEnd(&zStream);
+    [compressedData setLength:zStream.total_out];
+    
+    return [NSData dataWithData:compressedData];
+}
+
+- (NSData *) gunzip:(NSError **)error 
+{
+    z_stream zStream;
+    
+    zStream.zalloc = Z_NULL;
+    zStream.zfree = Z_NULL;
+    zStream.next_in = (Bytef *)[self bytes];
+    zStream.avail_in = [self length];
+    zStream.avail_out = 0;
+    zStream.total_out = 0;
+    
+    NSUInteger estimatedLength = [self length] / 2;
+    NSMutableData *decompressedData = [NSMutableData dataWithLength:estimatedLength];
+    
+    do {
+        if (zStream.total_out >= [decompressedData length]) {
+            [decompressedData increaseLengthBy:estimatedLength / 2];
+        }
+        
+        zStream.next_out = [decompressedData mutableBytes] + zStream.total_out;
+        zStream.avail_out = [decompressedData length] - zStream.total_out;
+        
+        int status = inflate(&zStream, Z_FINISH);
+        
+        if (status == Z_STREAM_END) {
+            break;
+        } else if (status != Z_OK) {
+            if (error) {
+                *error = [NSError errorWithDomain:@"zlib" code:status userInfo:nil];
+            }
+            
+            return nil;
+        }
+    } while (zStream.avail_out == 0);
+    
+    [decompressedData setLength:zStream.total_out];
+    
+    return [NSData dataWithData:decompressedData];
+}
+
+
+
+*/
+
+- (NSData *) gzip 
+{
+    if (self.length == 0)
+        return self;
+    
+    z_stream zs;
+
+    zs.next_in = (Bytef *)self.bytes;
+    zs.avail_in = self.length;    
+    zs.total_out = 0;    
+    zs.avail_out = 0;    
+    zs.zalloc = Z_NULL;
+    zs.zfree = Z_NULL;
+    zs.opaque = Z_NULL;
+    
+    NSMutableData *deflated = [NSMutableData dataWithLength:16384];
+    
+    if (Z_OK != deflateInit2(&zs, Z_DEFAULT_COMPRESSION, Z_DEFLATED, MAX_WBITS, 8, Z_DEFAULT_STRATEGY)) 
+        return nil;
+    
+    do {
+        if (zs.total_out >= deflated.length)
+            [deflated increaseLengthBy:16384];
+        
+        zs.next_out = deflated.mutableBytes + zs.total_out;
+        zs.avail_out = deflated.length - zs.total_out;
+        int status =  deflate(&zs, Z_FINISH);
+        
+        if (Z_OK != status && 
+            Z_STREAM_END != status)
+            return nil; // some error            
+        
+    } while (0 == zs.avail_out);
+    
+    deflateEnd(&zs);
+    deflated.length = zs.total_out;
+    
+    return deflated;
+}
+
+- (NSData *) gunzip
+{
+    NSUInteger halfLen = self.length / 2;
+    
+    NSMutableData *inflated = [NSMutableData dataWithLength:self.length + halfLen];
+            
+    z_stream zs;
+    
+    zs.next_in = (Bytef *)self.bytes;
+    zs.avail_in = self.length;
+    zs.total_out = 0;
+    zs.avail_out = 0;    
+    zs.zalloc = Z_NULL;
+    zs.zfree = Z_NULL;
+    zs.opaque = Z_NULL;
+    
+    if (Z_OK != inflateInit2(&zs, MAX_WBITS)) 
+        return nil;
+
+    int status = Z_OK;
+    while (Z_OK == status) {
+        
+        if (zs.total_out >= inflated.length)
+            [inflated increaseLengthBy:halfLen];
+        
+        zs.next_out = inflated.mutableBytes + zs.total_out;
+        zs.avail_out = inflated.length - zs.total_out;
+        
+        status = inflate(&zs, Z_SYNC_FLUSH);        
+    }
+    
+    if ((Z_STREAM_END == status) && 
+        (Z_OK == inflateEnd(&zs))) {
+        
+        inflated.length = zs.total_out;
+        return inflated;
+    }
+
+    return nil;
 }
 
 @end

@@ -27,7 +27,14 @@ describe(@"NSData (Kolyvan)", ^{
         
         assertThat([NSData dataFromBase64String:s], equalTo(d));
     });
-   
+    
+    it(@"gzip", ^{
+       
+        NSString *s = @"The quick brown fox jumps over the lazy dog";
+        NSData *data = [s dataUsingEncoding:NSUTF8StringEncoding];        
+        assertThat(s, equalTo([NSString stringWithUTF8String:data.gzip.gunzip.bytes]));        
+        
+    });
     
 });
 SPEC_END

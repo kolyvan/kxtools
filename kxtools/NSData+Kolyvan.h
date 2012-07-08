@@ -20,4 +20,7 @@
 + (NSData *) dataFromBase64String:(NSString *)string;
 - (NSString *) base64EncodedString;
 
+- (NSData *) gzip;
+- (NSData *) gunzip; 
+
 @end
