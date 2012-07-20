@@ -184,5 +184,25 @@ describe(@"NSString (Kolyvan)", ^{
         assertThat([@"ab" drop:1], equalTo(@"b"));
     });
     
+    it(@"lowercase, uppercase", ^{
+
+        assertThatBool(YES, equalToBool([@"" isLowercase]));                
+        assertThatBool(YES, equalToBool([@"abcde" isLowercase]));
+        assertThatBool(NO,  equalToBool([@"aBCDe" isLowercase]));        
+        assertThatBool(NO,  equalToBool([@"ABCDE" isLowercase]));                
+        assertThatBool(YES, equalToBool([@"абвгд" isLowercase]));
+        assertThatBool(NO,  equalToBool([@"аБВГд" isLowercase]));        
+        assertThatBool(NO,  equalToBool([@"АБВГД" isLowercase]));                
+
+        assertThatBool(YES, equalToBool([@"" isUppercase]));                
+        assertThatBool(NO,  equalToBool([@"abcde" isUppercase]));
+        assertThatBool(NO,  equalToBool([@"aBCDe" isUppercase]));        
+        assertThatBool(YES, equalToBool([@"ABCDE" isUppercase]));                
+        assertThatBool(NO,  equalToBool([@"абвгд" isUppercase]));
+        assertThatBool(NO,  equalToBool([@"аБВГд" isUppercase]));        
+        assertThatBool(YES, equalToBool([@"АБВГД" isUppercase]));
+    });
+
+    
 });
 SPEC_END

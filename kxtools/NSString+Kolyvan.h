@@ -41,6 +41,8 @@
 - (BOOL) nonEmpty;
 - (BOOL) contains:(NSString *)string; 
 - (BOOL) isEmail;
+- (BOOL) isLowercase;
+- (BOOL) isUppercase;
 
 - (NSString *) escapeHTML;
 - (NSString *) unescapeHTML;

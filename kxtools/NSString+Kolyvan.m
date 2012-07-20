@@ -137,6 +137,24 @@
     return [p evaluateWithObject:[self lowercaseString]];  
 }
 
+- (BOOL) isLowercase
+{
+    static NSCharacterSet *charset = nil;
+    if (!charset)
+        charset = [NSCharacterSet lowercaseLetterCharacterSet];    
+    
+    return [charset isSupersetOfSet:[NSCharacterSet characterSetWithCharactersInString: self]];
+}
+
+- (BOOL) isUppercase
+{
+    static NSCharacterSet *charset = nil;
+    if (!charset)
+        charset = [NSCharacterSet uppercaseLetterCharacterSet];
+    
+    return [charset isSupersetOfSet:[NSCharacterSet characterSetWithCharactersInString: self]];
+}
+
 - (NSString *) escapeHTML
 {
   	NSCharacterSet *chs = [NSCharacterSet characterSetWithCharactersInString:@"<>&\""];
@@ -245,7 +263,6 @@
     return acc;
 }
 
-
 - (NSString *) trimmed 
 {
     return [self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -260,7 +277,6 @@
 {
     return [NSString stringWithFormat:@"%@%@", string, self];
 }
-
 
 - (NSArray *) split 
 {
