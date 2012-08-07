@@ -97,7 +97,7 @@ static NSError * ensureDirectory(NSString * path)
 
 #ifdef DEBUG    
     if (error)
-        NSLog(@"failed in %@ - %@", __PRETTY_FUNCTION__, completeErrorMessage(error));
+        NSLog(@"failed in %s - %@", __PRETTY_FUNCTION__, completeErrorMessage(error));
 #endif    
     return error;
     

@@ -300,7 +300,7 @@
 
 - (NSArray *) lines: (NSInteger) maxLen
 {   
-    return [[self lines] flatMap:^(id elem) {
+    return [[self lines] flatMap:^id(id elem) {
         
         NSString *s = elem;
         
@@ -325,7 +325,7 @@
         }
         
         [bb addObject: s];
-        return (id)bb;        
+        return bb;        
     }];
 }
 

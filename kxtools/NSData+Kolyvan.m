@@ -202,7 +202,7 @@ static NSData * base64decode (NSData * from)
     z_stream zs;
 
     zs.next_in = (Bytef *)self.bytes;
-    zs.avail_in = self.length;    
+    zs.avail_in = (uInt)self.length;
     zs.total_out = 0;    
     zs.avail_out = 0;    
     zs.zalloc = Z_NULL;
@@ -219,7 +219,7 @@ static NSData * base64decode (NSData * from)
             [deflated increaseLengthBy:16384];
         
         zs.next_out = deflated.mutableBytes + zs.total_out;
-        zs.avail_out = deflated.length - zs.total_out;
+        zs.avail_out = (uInt)(deflated.length - zs.total_out);
         int status =  deflate(&zs, Z_FINISH);
         
         if (Z_OK != status && 
@@ -243,7 +243,7 @@ static NSData * base64decode (NSData * from)
     z_stream zs;
     
     zs.next_in = (Bytef *)self.bytes;
-    zs.avail_in = self.length;
+    zs.avail_in = (uInt)self.length;
     zs.total_out = 0;
     zs.avail_out = 0;    
     zs.zalloc = Z_NULL;
@@ -260,7 +260,7 @@ static NSData * base64decode (NSData * from)
             [inflated increaseLengthBy:halfLen];
         
         zs.next_out = inflated.mutableBytes + zs.total_out;
-        zs.avail_out = inflated.length - zs.total_out;
+        zs.avail_out = (uInt)(inflated.length - zs.total_out);
         
         status = inflate(&zs, Z_SYNC_FLUSH);        
     }
