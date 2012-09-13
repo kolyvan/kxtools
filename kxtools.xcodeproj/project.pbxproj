@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8717F8ED1601EF4900C28FC3 /* KxBitArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 8717F8EC1601EF4900C28FC3 /* KxBitArray.m */; };
+		8717F8EE1601EF4900C28FC3 /* KxBitArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 8717F8EC1601EF4900C28FC3 /* KxBitArray.m */; };
+		8717F8F216020E1E00C28FC3 /* KxBitArraySpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 8717F8F116020E1E00C28FC3 /* KxBitArraySpec.m */; };
 		87BD445515580EC70004853F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87BD445415580EC70004853F /* Foundation.framework */; };
 		87BD448215580F7B0004853F /* KxCast.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BD446A15580F7B0004853F /* KxCast.m */; };
 		87BD448315580F7B0004853F /* KxConsole.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BD446C15580F7B0004853F /* KxConsole.m */; };
@@ -69,6 +72,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8717F8EB1601EF4900C28FC3 /* KxBitArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KxBitArray.h; sourceTree = "<group>"; };
+		8717F8EC1601EF4900C28FC3 /* KxBitArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KxBitArray.m; sourceTree = "<group>"; };
+		8717F8F116020E1E00C28FC3 /* KxBitArraySpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KxBitArraySpec.m; sourceTree = "<group>"; };
 		8771A6691558E782001BB718 /* KxArc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KxArc.h; sourceTree = "<group>"; };
 		87BD445015580EC70004853F /* kxtools */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = kxtools; sourceTree = BUILT_PRODUCTS_DIR; };
 		87BD445415580EC70004853F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -173,6 +179,8 @@
 				87BD446C15580F7B0004853F /* KxConsole.m */,
 				87BD446D15580F7B0004853F /* KxList.h */,
 				87BD446E15580F7B0004853F /* KxList.m */,
+				8717F8EB1601EF4900C28FC3 /* KxBitArray.h */,
+				8717F8EC1601EF4900C28FC3 /* KxBitArray.m */,
 				87BD446F15580F7B0004853F /* KxMacros.h */,
 				8771A6691558E782001BB718 /* KxArc.h */,
 				87BD447015580F7B0004853F /* KxTuple2.h */,
@@ -207,6 +215,7 @@
 			isa = PBXGroup;
 			children = (
 				87BD44A6155810320004853F /* KxListSpec.m */,
+				8717F8F116020E1E00C28FC3 /* KxBitArraySpec.m */,
 				87BD44A7155810320004853F /* NSArraySpec.m */,
 				87BD44A8155810320004853F /* NSDataSpec.m */,
 				87BD44A9155810320004853F /* NSDateSpec.m */,
@@ -307,6 +316,7 @@
 				87BD448A15580F7B0004853F /* NSDictionary+Kolyvan.m in Sources */,
 				87BD448C15580F7B0004853F /* NSObject+Kolyvan.m in Sources */,
 				87BD448D15580F7B0004853F /* NSString+Kolyvan.m in Sources */,
+				8717F8ED1601EF4900C28FC3 /* KxBitArray.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -332,6 +342,8 @@
 				87BD44BB1558106E0004853F /* NSDictionary+Kolyvan.m in Sources */,
 				87BD44BD155810750004853F /* NSObject+Kolyvan.m in Sources */,
 				87BD44BE155810780004853F /* NSString+Kolyvan.m in Sources */,
+				8717F8EE1601EF4900C28FC3 /* KxBitArray.m in Sources */,
+				8717F8F216020E1E00C28FC3 /* KxBitArraySpec.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
