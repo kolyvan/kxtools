@@ -23,4 +23,7 @@
 - (NSData *) gzip;
 - (NSData *) gunzip; 
 
+- (NSData *) sha1;
+- (NSData *) md5;
+
 @end

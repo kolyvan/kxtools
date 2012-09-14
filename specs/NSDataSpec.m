@@ -36,5 +36,20 @@ describe(@"NSData (Kolyvan)", ^{
         
     });
     
+    it(@"sha", ^{
+        
+        char bytes[] = {'k', 'o', 'l', 'y', 'v', 'a', 'n'};
+        NSData *d = [[NSData dataWithBytes: bytes length:sizeof(bytes)] sha1];
+        NSString *s = [d base64EncodedString];
+        assertThat(s, equalTo(@"QIeHjvqhJTMwdP9xyLIKRPBDNe8="));
+    });
+    
+    it(@"md5", ^{
+        
+        char bytes[] = {'k', 'o', 'l', 'y', 'v', 'a', 'n'};
+        NSData *d = [[NSData dataWithBytes: bytes length:sizeof(bytes)] md5];
+        NSString *s = [d base64EncodedString];
+        assertThat(s, equalTo(@"+hIseCmZchyee4Ypjwf+Lg=="));
+    });
 });
 SPEC_END

@@ -34,6 +34,7 @@
 #import "NSData+Kolyvan.h"
 #import "KxArc.h"
 #import <zlib.h>
+#import <CommonCrypto/CommonDigest.h>
 
 static NSData * base64encode(NSData * from)
 {    
@@ -274,5 +275,25 @@ static NSData * base64decode (NSData * from)
 
     return nil;
 }
+
+- (NSData *) sha1
+{
+    Byte digest[CC_SHA1_DIGEST_LENGTH];
+    
+    CC_SHA1_CTX context;
+    CC_SHA1_Init(&context);
+    CC_SHA1_Update(&context, self.bytes, (CC_LONG)self.length);
+    CC_SHA1_Final(digest, &context);
+    
+    return [NSData dataWithBytes:digest length:CC_SHA1_DIGEST_LENGTH];
+}
+
+- (NSData *) md5
+{
+    Byte digest[CC_MD5_DIGEST_LENGTH];
+    CC_MD5(self.bytes, (CC_LONG)self.length, digest);
+    return [NSData dataWithBytes:digest length:CC_MD5_DIGEST_LENGTH];    
+}
+
 
 @end
