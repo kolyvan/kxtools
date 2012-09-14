@@ -97,10 +97,12 @@ describe(@"KxBitArray", ^{
         [bits setAll];
         
         [bits clearBit:11];
-        [bits clearBit:99];
+        [bits clearBit:77];
         
         assertThatBool([bits testBit:11], equalToBool(NO));
-        assertThatBool([bits testBit:99], equalToBool(NO));
+        assertThatBool([bits testBit:77], equalToBool(NO));
+        assertThatBool([bits testBit:78], equalToBool(YES));
+        assertThatBool([bits testBit:99], equalToBool(YES));
     });
     
     it(@"toggleBit", ^{
@@ -217,7 +219,20 @@ describe(@"KxBitArray", ^{
         
         assertThatBool([bits1 isEqual:@""], equalToBool(NO));
         assertThatBool([bits1 isEqual:bits2], equalToBool(NO));
-        assertThatBool([bits1 isEqual:[bits1 copy]], equalToBool(YES));        
+        assertThatBool([bits1 isEqual:[bits1 copy]], equalToBool(YES));
+        
+        KxBitArray *bits3 = [KxBitArray bitsFromString: @"11111111"];
+        KxBitArray *bits4 = [KxBitArray bits: 8];
+        assertThatBool([bits3 isEqual:bits4], equalToBool(NO));
+        
+        [bits4 setAll];
+        assertThatBool([bits3 isEqual:bits4], equalToBool(YES));
+                
+        [bits3 clearAll];
+        assertThatBool([bits3 isEqual:bits4], equalToBool(NO));
+        
+        [bits4 clearAll];
+        assertThatBool([bits3 isEqual:bits4], equalToBool(YES));
     });
     
     it(@"enumerateBits", ^{

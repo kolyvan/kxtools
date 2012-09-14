@@ -127,7 +127,12 @@ static inline void _toggleBit(word_t* words, NSUInteger index)
 
 - (void) setAll
 {
-    memset(_words, 0xFF, _numBytes(_count));
+    NSUInteger numBytes = (_count / WORD_SIZE) * sizeof(word_t);
+//  memset(_words, 0xFF, _numBytes(_count));
+    memset(_words, 0xFF, numBytes);
+    NSUInteger tail = numBytes * 8;
+    for (NSUInteger i = tail; i < _count; ++i)
+        _setBit(_words, i);
 }
 
 - (void) clearAll
