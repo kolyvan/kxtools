@@ -65,6 +65,8 @@
 
 - (NSArray *) toArray;
 
+- (NSArray *) unique;
+
 @end
 
 

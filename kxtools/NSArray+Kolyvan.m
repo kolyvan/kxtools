@@ -265,6 +265,17 @@
     return [NSArray arrayWithArray:self];
 }
 
+- (NSArray *) unique
+{
+    NSMutableArray *ma = [NSMutableArray array];
+    
+    for (id elem in self)
+        if (![ma containsObject:elem])
+            [ma addObject:elem];
+    
+    return ma.nonEmpty ? [ma copy] : self;
+}
+
 @end
 
 

@@ -191,5 +191,17 @@ describe(@"NSArray (Kolyvan)", ^{
         
     });
     
+    it(@"unique", ^{
+
+        NSArray * a1 = @[@1, @2, @3, @4, @5];
+        NSArray * a2 = @[@1, @2, @1, @1, @2, @3, @4, @4, @5, @3];
+
+        assertThat([@[] unique], equalTo(@[]));
+        assertThat([a1 unique], equalTo(a1));
+        assertThat([a2 unique], equalTo(a1));
+        
+    });
+
+    
 });
 SPEC_END
