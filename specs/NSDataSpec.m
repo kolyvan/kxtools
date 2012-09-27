@@ -32,8 +32,7 @@ describe(@"NSData (Kolyvan)", ^{
        
         NSString *s = @"The quick brown fox jumps over the lazy dog";
         NSData *data = [s dataUsingEncoding:NSUTF8StringEncoding];        
-        assertThat(s, equalTo([NSString stringWithUTF8String:data.gzip.gunzip.bytes]));        
-        
+        assertThat(s, equalTo([NSString stringWithUTF8String:data.gzip.gunzip.bytes]));
     });
     
     it(@"sha", ^{
@@ -50,6 +49,13 @@ describe(@"NSData (Kolyvan)", ^{
         NSData *d = [[NSData dataWithBytes: bytes length:sizeof(bytes)] md5];
         NSString *s = [d base64EncodedString];
         assertThat(s, equalTo(@"+hIseCmZchyee4Ypjwf+Lg=="));
+    });
+    
+    it(@"toString", ^{
+        
+        Byte bytes[] = {0xde, 0xad, 0xc0, 0xde};
+        NSData *d = [NSData dataWithBytes: bytes length:sizeof(bytes)];
+        assertThat([d toString], equalTo(@"deadc0de"));
     });
 });
 SPEC_END

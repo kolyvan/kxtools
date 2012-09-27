@@ -295,5 +295,13 @@ static NSData * base64decode (NSData * from)
     return [NSData dataWithBytes:digest length:CC_MD5_DIGEST_LENGTH];    
 }
 
+- (NSString *) toString
+{
+    NSMutableString *ms = [NSMutableString stringWithCapacity:self.length * 2];
+    const Byte *p = self.bytes;
+    for(int i = 0; i < self.length; i++)
+        [ms appendFormat:@"%02x", p[i]];
+    return [ms copy];
+}
 
 @end
