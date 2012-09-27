@@ -72,12 +72,6 @@ describe(@"KxBitArray", ^{
         assertThatBool([bits testBit:7], equalToBool(YES));
     });
     
-    it(@"description", ^{
-        
-        KxBitArray *bits = [[KxBitArray bitsFromString: @"00110001"] copy];
-        assertThat([bits description], equalTo(@"00110001"));
-    });
-    
     it(@"setBit", ^{
         
         KxBitArray *bits = [KxBitArray bits: 4];
@@ -247,6 +241,21 @@ describe(@"KxBitArray", ^{
         assertThat(ma, equalTo(@[@1, @3, @6, @7]));
     });
     
+    it(@"toString", ^{
+        
+        KxBitArray *bits = [KxBitArray bitsFromString: @"00110001"];
+        assertThat([bits toString], equalTo(@"00110001"));
+    });
+    
+    it(@"toData", ^{
+        
+        Byte bytes[] = {1,0,1,0,1,0,1,0};
+        NSData *data = [NSData dataWithBytes:bytes length:sizeof(bytes)];
+        KxBitArray *bits = [KxBitArray bitsFromData: data];
+        assertThat([bits toData], equalTo(data));
+        assertThat([bits toString], equalTo(@"10101010"));
+    });
+    
     it(@"toArray", ^{
         
         KxBitArray *bits = [KxBitArray bitsFromString: @"11111111"];
@@ -258,5 +267,18 @@ describe(@"KxBitArray", ^{
         bits = [KxBitArray bitsFromString: @"10000001"];
         assertThat([bits toArray], equalTo(@[@0, @7]));
     });
+    
+    it(@"toIndexSet", ^{
+        
+        KxBitArray *bits = [KxBitArray bitsFromString: @"11111111"];        
+        assertThat([bits toIndexSet], equalTo([NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 8)]));
+        
+        bits = [KxBitArray bitsFromString: @"00000000"];
+        assertThat([bits toIndexSet], equalTo([NSIndexSet indexSet]));
+        
+        bits = [KxBitArray bitsFromString: @"00010000"];
+        assertThat([bits toIndexSet], equalTo([NSIndexSet indexSetWithIndex:3]));
+    });
+
 });
 SPEC_END

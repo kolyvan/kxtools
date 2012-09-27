@@ -55,6 +55,11 @@ static inline void _toggleBit(word_t* words, NSUInteger index)
     return [[KxBitArray alloc] initFromString: string];    
 }
 
++ (id) bitsFromData: (NSData *) data
+{
+    return [[KxBitArray alloc] initFromData: data];
+}
+
 - (id) init: (NSUInteger) count
 {
     self = [super init];
@@ -77,6 +82,22 @@ static inline void _toggleBit(word_t* words, NSUInteger index)
         const char *p = [string cStringUsingEncoding:NSASCIIStringEncoding];
         for (int i = 0; i < _count; ++i)
             if (p[i] != '0')
+                _setBit(_words, i);
+    }
+    return  self;
+}
+
+- (id) initFromData: (NSData *) data
+{
+    self = [super init];
+    if (self) {
+        _count = data.length;
+        _words = (word_t*) malloc(_numBytes(_count));
+        [self clearAll];
+        
+        const Byte *p = data.bytes;
+        for (int i = 0; i < _count; ++i)
+            if (p[i] != 0)
                 _setBit(_words, i);
     }
     return  self;
@@ -187,13 +208,8 @@ static inline void _toggleBit(word_t* words, NSUInteger index)
 
 - (NSString *) description
 {
-    char str[_count + 1];
-    
-    for (int i = 0; i < _count; i++)
-        str[i] = _testBit(_words, i) ? '1' : '0';
-    str[_count] = 0;
-    
-    return [NSString stringWithCString:str encoding:NSASCIIStringEncoding];
+    return [NSString stringWithFormat:@"<%@:%p %ld/%ld>",
+            [self class], self, [self countBits: YES], self.count];
 }
 
 - (id) copyWithZone:(NSZone *) zone
@@ -280,6 +296,36 @@ static inline void _toggleBit(word_t* words, NSUInteger index)
         [ma addObject:[NSNumber numberWithInteger:i]];
     }];
     return [ma copy];
+}
+
+- (NSIndexSet *) toIndexSet
+{
+    NSMutableIndexSet *mis = [NSMutableIndexSet indexSet];
+    [self enumerateBits:^(NSUInteger i) {
+        [mis addIndex:i];
+    }];
+    return mis;
+}
+
+- (NSString *) toString
+{
+    char str[_count + 1];
+    
+    for (int i = 0; i < _count; i++)
+        str[i] = _testBit(_words, i) ? '1' : '0';
+    str[_count] = 0;
+    
+    return [NSString stringWithCString:str encoding:NSASCIIStringEncoding];
+}
+
+- (NSData *) toData
+{
+    Byte buf[_count];
+    
+    for (int i = 0; i < _count; i++)
+        buf[i] = _testBit(_words, i) ? 1 : 0;
+    
+    return [NSData dataWithBytes:buf length:sizeof(buf)];
 }
 
 @end

@@ -14,6 +14,7 @@
 
 + (id) bits: (NSUInteger) count;
 + (id) bitsFromString: (NSString *) string;
++ (id) bitsFromData: (NSData *) data;
 
 - (id) init: (NSUInteger) count;
 - (id) initFromString: (NSString *) string;
@@ -39,5 +40,8 @@
 - (void) enumerateBits: (void(^)(NSUInteger))block;
 
 - (NSArray *) toArray;
+- (NSIndexSet *) toIndexSet;
+- (NSString *) toString;
+- (NSData *) toData;
 
 @end
