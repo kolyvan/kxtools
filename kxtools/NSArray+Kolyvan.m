@@ -276,6 +276,13 @@
     return ma.nonEmpty ? [ma copy] : self;
 }
 
+- (NSArray *) shuffle
+{
+    NSMutableArray *ma = [self mutableCopy];
+    [ma shuffle];
+    return [ma copy];
+}
+
 @end
 
 
@@ -355,6 +362,16 @@
     id result = KX_RETAIN(self.last);
     [self removeLastObject];
     return KX_AUTORELEASE(result);
+}
+
+- (void)shuffle
+{
+    const NSUInteger count = self.count;
+    for (NSUInteger i = 0; i < count - 1; ++i) {
+        const NSUInteger n = arc4random_uniform((UInt32)(count - i)) + i;
+        if (i != n)
+            [self exchangeObjectAtIndex:i withObjectAtIndex:n];
+    }
 }
 
 @end

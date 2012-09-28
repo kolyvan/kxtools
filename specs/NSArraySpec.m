@@ -198,10 +198,8 @@ describe(@"NSArray (Kolyvan)", ^{
 
         assertThat([@[] unique], equalTo(@[]));
         assertThat([a1 unique], equalTo(a1));
-        assertThat([a2 unique], equalTo(a1));
-        
+        assertThat([a2 unique], equalTo(a1));        
     });
-
     
 });
 SPEC_END

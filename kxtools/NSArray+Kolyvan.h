@@ -66,6 +66,7 @@
 - (NSArray *) toArray;
 
 - (NSArray *) unique;
+- (NSArray *) shuffle;
 
 @end
 
@@ -79,5 +80,7 @@
 
 - (void) push:(id) object;
 - (id) pop;
+
+- (void) shuffle;
 
 @end
