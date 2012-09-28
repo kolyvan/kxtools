@@ -206,6 +206,14 @@ static inline void _toggleBit(word_t* words, NSUInteger index)
     return NSNotFound;
 }
 
+- (BOOL) testAny
+{
+    for (int i = 0; i < _numWords(_count); ++i)
+        if (_words[i] > 0)
+            return YES;
+    return NO;
+}
+
 - (NSString *) description
 {
     return [NSString stringWithFormat:@"<%@:%p %ld/%ld>",
@@ -249,8 +257,20 @@ static inline void _toggleBit(word_t* words, NSUInteger index)
 - (KxBitArray *) negateBits
 {
     KxBitArray *result = [self copy];
-    for (int i = 0; i < _numWords(_count); ++i)
+    
+    NSUInteger num = (_count / WORD_SIZE);
+    
+    for (int i = 0; i < num; ++i)
         result->_words[i] = ~_words[i];
+    
+    NSUInteger tail = num * sizeof(word_t) * 8;
+    
+    for (NSUInteger i = tail; i < _count; ++i)
+        if (_testBit(_words, i))
+            _clearBit(result->_words, i);
+        else
+            _setBit(result->_words, i);
+    
     return result;
 }
 

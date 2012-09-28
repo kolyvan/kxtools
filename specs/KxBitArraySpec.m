@@ -144,17 +144,22 @@ describe(@"KxBitArray", ^{
         assertThatInteger([bits countBits:YES], equalToInteger(0));
         
         bits = [KxBitArray bitsFromString: @"1000000001"];
-        assertThatInteger([bits countBits:YES], equalToInteger(2));        
+        assertThatInteger([bits countBits:YES], equalToInteger(2));
+        
+        [bits setAll];
+        assertThatInteger([bits countBits:YES], equalToInteger(10));
     });
     
-    it(@"firstSetBit", ^{
+    it(@"firstSetBit, testAny", ^{
         
         KxBitArray *bits = [KxBitArray bits: 100];
         
         assertThatInteger([bits firstSetBit], equalToInteger(NSNotFound));
+        assertThatBool([bits testAny], equalToBool(NO));
         
         [bits setBit:42];
         assertThatInteger([bits firstSetBit], equalToInteger(42));
+        assertThatBool([bits testAny], equalToBool(YES));
     });
 
     it(@"intersectBits", ^{
@@ -204,6 +209,14 @@ describe(@"KxBitArray", ^{
         assertThatBool([bits testBit:5], equalToBool(YES));
         assertThatBool([bits testBit:6], equalToBool(YES));
         assertThatBool([bits testBit:7], equalToBool(NO));
+        
+        assertThatInteger([bits countBits:YES], equalToInteger(5));
+        
+        bits = [[KxBitArray bits: 100] negateBits];
+        assertThatInteger([bits countBits:YES], equalToInteger(100));
+
+        bits = [bits negateBits];
+        assertThatInteger([bits countBits:YES], equalToInteger(0));
     });
     
     it(@"isEqual", ^{

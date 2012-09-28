@@ -30,6 +30,7 @@
 
 - (NSUInteger) countBits: (BOOL) on;
 - (NSUInteger) firstSetBit;
+- (BOOL) testAny;
 
 - (KxBitArray *) intersectBits: (KxBitArray *) other;
 - (KxBitArray *) unionBits: (KxBitArray *) other;
