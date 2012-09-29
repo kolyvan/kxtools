@@ -47,6 +47,28 @@
     #define KX_AUTORELEASE_POOL_BEGIN() @autoreleasepool {
     #define KX_AUTORELEASE_POOL_END() }
 
+    #if TARGET_OS_IPHONE
+
+    #if __IPHONE_OS_VERSION_MIN_REQUIRED >= 60000
+        #define KX_DISPATCH_RETAIN(x)
+        #define KX_DISPATCH_RELEASE(x)
+    #else
+        #define KX_DISPATCH_RETAIN(x)    (dispatch_retain(x))
+        #define KX_DISPATCH_RELEASE(x)   (dispatch_release(x))
+    #endif
+
+    #else
+
+    #if MAC_OS_X_VERSION_MIN_REQUIRED >= 1080
+        #define KX_DISPATCH_RETAIN(x)
+        #define KX_DISPATCH_RELEASE(x)
+    #else
+        #define KX_DISPATCH_RETAIN(x)    (dispatch_retain(x))
+        #define KX_DISPATCH_RELEASE(x)   (dispatch_release(x))
+    #endif
+
+    #endif
+
 #else
 
     #define KX_RETAIN(x)            ([(x) retain])
@@ -64,6 +86,9 @@
 
     #define KX_AUTORELEASE_POOL_BEGIN() NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     #define KX_AUTORELEASE_POOL_END()   [pool drain];
+
+    #define KX_DISPATCH_RETAIN(x)    (dispatch_retain(x))
+    #define KX_DISPATCH_RELEASE(x)   (dispatch_release(x))
 
 #endif
 
