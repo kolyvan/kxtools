@@ -217,7 +217,7 @@ static inline void _toggleBit(word_t* words, NSUInteger index)
 - (NSString *) description
 {
     return [NSString stringWithFormat:@"<%@:%p %ld/%ld>",
-            [self class], self, [self countBits: YES], self.count];
+            [self class], self, (long)[self countBits: YES], (long)self.count];
 }
 
 - (id) copyWithZone:(NSZone *) zone

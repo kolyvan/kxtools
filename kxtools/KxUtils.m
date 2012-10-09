@@ -49,7 +49,7 @@ static NSString * completeErrorMessage (NSError * error)
     NSMutableString *message = [[NSString stringWithFormat:@"%@ (%@/%ld)", 
                                  [error localizedDescription], 
                                  [error domain], 
-                                 [error code]] mutableCopy];
+                                 (long)[error code]] mutableCopy];
     
     NSDictionary *userInfo;
     
@@ -59,7 +59,7 @@ static NSString * completeErrorMessage (NSError * error)
         NSString * s = [NSString stringWithFormat:@"%@ (%@/%ld)", 
                         [error localizedDescription], 
                         [error domain], 
-                        [error code]];
+                        (long)[error code]];
         
         [message appendString:@"\n"];
         [message appendString:s];
