@@ -287,7 +287,8 @@ static inline void _toggleBit(word_t* words, NSUInteger index)
     if (self == other)
 		return YES;
     
-    if (_count != other->_count)
+    if (!other ||
+        _count != other->_count)
         return NO;
     
     return 0 == memcmp(_words, other->_words, _numBytes(_count));

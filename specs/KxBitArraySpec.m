@@ -223,7 +223,8 @@ describe(@"KxBitArray", ^{
         
         KxBitArray *bits1 = [KxBitArray bitsFromString: @"00110001"];
         KxBitArray *bits2 = [KxBitArray bitsFromString: @"01100101"];
-        
+
+        assertThatBool([bits1 isEqualToBitArray:nil], equalToBool(NO));
         assertThatBool([bits1 isEqual:@""], equalToBool(NO));
         assertThatBool([bits1 isEqual:bits2], equalToBool(NO));
         assertThatBool([bits1 isEqual:[bits1 copy]], equalToBool(YES));
