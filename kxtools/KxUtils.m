@@ -44,25 +44,29 @@
 #include <sys/xattr.h>
 #endif
 
-static NSString * completeErrorMessage (NSError * error) 
-{    
-    NSMutableString *message = [[NSString stringWithFormat:@"%@ (%@/%ld)", 
-                                 [error localizedDescription], 
-                                 [error domain], 
-                                 (long)[error code]] mutableCopy];
-    
+static NSString * errorMessage (NSError *error)
+{
+    NSString *reason = error.localizedFailureReason;
+    if (reason.length) {
+        return [NSString stringWithFormat:@"%@ (%@/%ld) reason: %@",
+                error.localizedDescription, error.domain, (long)error.code, reason];
+    } else {
+        return [NSString stringWithFormat:@"%@ (%@/%ld)",
+                error.localizedDescription, error.domain, (long)error.code];
+    }
+}
+
+static NSString * completeErrorMessage (NSError * error)
+{
+    NSMutableString *message = [errorMessage(error) mutableCopy];
+        
     NSDictionary *userInfo;
     
     while ((userInfo = [error userInfo]) && 
            (error = [userInfo objectForKey:NSUnderlyingErrorKey])) {
         
-        NSString * s = [NSString stringWithFormat:@"%@ (%@/%ld)", 
-                        [error localizedDescription], 
-                        [error domain], 
-                        (long)[error code]];
-        
-        [message appendString:@"\n"];
-        [message appendString:s];
+        [message appendString:@"\n  "];
+        [message appendString:errorMessage(error)];
     }
     
     return message;
@@ -362,7 +366,8 @@ KxUtils_t KxUtils = {
     //    
     waitRunLoop,
     
-    //    
+    //
+    errorMessage,
     completeErrorMessage,
     
     //

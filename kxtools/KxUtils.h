@@ -52,7 +52,8 @@ typedef struct {
     
     //
     
-    NSString * (*completeErrorMessage)(NSError * error); 
+    NSString * (*errorMessage)(NSError *error);
+    NSString * (*completeErrorMessage)(NSError *error);
 
     // factory functions
     
