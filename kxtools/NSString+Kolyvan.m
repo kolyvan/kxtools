@@ -236,34 +236,54 @@
 	return s;
 }
 
-- (NSString *) removeHTML
+- (NSString *) stripHTML: (BOOL) addNewLine
 {
-    NSScanner *scanner = [NSScanner scannerWithString:self];
-    NSMutableString *acc = [NSMutableString stringWithCapacity:[self length]];
-    NSString *s;
-
-    while ([scanner isAtEnd] == NO) {
-        
-        s = nil;
-        [scanner scanUpToString:@"<" intoString:&s];        
-        if (s)
-            [acc appendString:s];
-        
-        if ([scanner scanString:@"<" intoString:nil]) {            
-            
-            s = nil;
-            [scanner scanUpToString:@">" intoString:&s];        
-            if (![scanner scanString:@">" intoString:nil]) {
-                if (s)
-                    [acc appendString:s];
-            }
-        }
-    }    
+    NSMutableString *ms = [NSMutableString string];
     
-    return acc;
+    NSScanner *scanner = [NSScanner scannerWithString:self];
+    [scanner setCharactersToBeSkipped:nil];
+    
+    while (!scanner.isAtEnd) {
+        
+        NSString *s, *tag = nil;
+        
+        if ([scanner scanUpToString:@"<" intoString:&s])
+            [ms appendString:s];
+        
+        if (![scanner scanString:@"<" intoString:nil])
+            break;
+        
+        if ([scanner scanUpToString:@">" intoString:&tag] &&
+            [scanner scanString:@">" intoString:nil]) {
+            
+            if (addNewLine) {
+                
+                tag = tag.lowercaseString.trimmed;
+                
+                if ([tag hasSuffix:@"/"]) // for case of <br />
+                    tag = [tag substringToIndex:tag.length-1].trimmed;
+                
+                if ([tag isEqualToString:@"br"] ||
+                    [tag isEqualToString:@"p"] ||
+                    [tag isEqualToString:@"div"] ||
+                    [tag isEqualToString:@"blockquote"]) {
+                    
+                    [ms appendString:@"\n"];
+                }
+            }
+            
+        } else {
+            
+            [ms appendString:@"<"];
+            if (tag.length)
+                [ms appendString:tag];
+        }
+    }
+    
+    return ms;
 }
 
-- (NSString *) trimmed 
+- (NSString *) trimmed
 {
     return [self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 }

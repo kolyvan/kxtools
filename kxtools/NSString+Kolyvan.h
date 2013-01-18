@@ -46,7 +46,7 @@
 
 - (NSString *) escapeHTML;
 - (NSString *) unescapeHTML;
-- (NSString *) removeHTML;
+- (NSString *) stripHTML: (BOOL) addNewLine;
 - (NSString *) trimmed;
 - (NSString *) append:(NSString *)string;
 - (NSString *) prepend:(NSString *)string;

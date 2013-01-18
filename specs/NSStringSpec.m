@@ -90,14 +90,22 @@ describe(@"NSString (Kolyvan)", ^{
         assertThat(html, equalTo([escaped unescapeHTML]));        
     });
         
-    it(@"removing html", ^{
-        assertThat([@"" removeHTML], equalTo(@""));
-        assertThat([@"foo" removeHTML], equalTo(@"foo"));
-        assertThat([@"<br />" removeHTML], equalTo(@""));
-        assertThat([@"<div>foo</div>" removeHTML], equalTo(@"foo"));
-        assertThat([@"<br />foo" removeHTML], equalTo(@"foo"));
-        assertThat([@"foo<br />" removeHTML], equalTo(@"foo"));        
-        assertThat([@"abc<div>123<span><b>+</b></span></div>456<br />def" removeHTML], equalTo(@"abc123+456def")); 
+    it(@"strip html", ^{
+        assertThat([@"" stripHTML: NO], equalTo(@""));
+        assertThat([@"foo" stripHTML: NO], equalTo(@"foo"));
+        assertThat([@"<br />" stripHTML: NO], equalTo(@""));
+        assertThat([@"<div>foo</div>" stripHTML: NO], equalTo(@"foo"));
+        assertThat([@"<br />foo" stripHTML: NO], equalTo(@"foo"));
+        assertThat([@"foo<br />" stripHTML: NO], equalTo(@"foo"));
+        assertThat([@"abc<div>123<span><b>+</b></span></div>456<br />def" stripHTML: NO], equalTo(@"abc123+456def"));
+        
+        assertThat([@"<br>" stripHTML: YES], equalTo(@"\n"));
+        assertThat([@"<br />" stripHTML: YES], equalTo(@"\n"));
+        assertThat([@"<div>foo</div>" stripHTML: YES], equalTo(@"\nfoo"));
+        assertThat([@"<br />foo" stripHTML: YES], equalTo(@"\nfoo"));
+        assertThat([@"foo<br />" stripHTML: YES], equalTo(@"foo\n"));
+        assertThat([@"abc<div>123<span><b>+</b></span></div>456<br />def" stripHTML: YES],
+                   equalTo(@"abc\n123+456\ndef"));
     });
 
     it(@"trimmed", ^{
