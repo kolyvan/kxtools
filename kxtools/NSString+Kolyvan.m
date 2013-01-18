@@ -382,4 +382,12 @@
     return [NSString stringWithString:self];
 }
 
+- (NSUInteger) integerValueFromHex
+{
+    unsigned int result = 0;
+    NSScanner* scanner = [NSScanner scannerWithString:self];
+    [scanner scanHexInt:&result];
+    return result;
+}
+
 @end

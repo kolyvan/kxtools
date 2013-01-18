@@ -211,6 +211,11 @@ describe(@"NSString (Kolyvan)", ^{
         assertThatBool(YES, equalToBool([@"АБВГД" isUppercase]));
     });
 
+    it(@"integerValueFromHex", ^{
+        
+        assertThatInteger(42, equalToInteger([@"2A" integerValueFromHex]));
+        assertThatInteger(65535, equalToInteger([@"ffff" integerValueFromHex]));
+    });
     
 });
 SPEC_END

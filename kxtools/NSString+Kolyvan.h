@@ -65,4 +65,6 @@
 - (NSArray *) toArray;
 - (NSString *) toString;
 
+- (NSUInteger) integerValueFromHex;
+
 @end
