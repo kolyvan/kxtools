@@ -460,7 +460,12 @@ static inline NSCalendar* currentCal() { return [NSCalendar currentCalendar]; }
         return [NSString stringWithFormat: inPast ? @"%dm" : @"+%dm", minutes];
     
     if ([self isToday]) 
-        return KxUtils.format(locString(@"today %@"), [self formattedDatePattern:@"HH:mm" timeZone:nil]);    
+        return KxUtils.format(locString(@"today %@"), [self formattedDatePattern:@"HH:mm" timeZone:nil]);
+    
+    int days = round(seconds/86400);
+
+    if (days < 30)
+        return [self formattedDatePattern:@"dd MMM." timeZone:nil];
     
     return [self dateFormatted];	
 }
