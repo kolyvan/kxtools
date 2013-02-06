@@ -365,7 +365,7 @@
 
 - (NSString *) base64decode
 {
-    return [self->isa stringFromAsciiBytes: [NSData dataFromBase64String: self]];    
+    return [NSString stringFromAsciiBytes: [NSData dataFromBase64String: self]];
 }
 
 - (NSArray *) toArray

@@ -541,6 +541,9 @@
 
 - (id) initWithCoder: (NSCoder*)coder
 {
+    self = [super init];
+    if (!self) return nil;
+    
    	if ([coder versionForClassName: NSStringFromClass([self class])] != 0)         
 	{ 
 		KX_RELEASE(self);
