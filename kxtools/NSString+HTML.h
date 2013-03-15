@@ -1,7 +1,7 @@
 //
-//  ru.kolyvan.repo
-//  https://github.com/kolyvan
-//  
+//  ru.kolyvan.kxtools
+//  https://github.com/kolyvan/kxtools
+//
 
 //  Copyright (C) 2012, Konstantin Boukreev (Kolyvan)
 
@@ -11,41 +11,11 @@
 
 //  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#import "NSObject+Kolyvan.h"
 
+#import <Foundation/Foundation.h>
 
-@implementation NSObject (Kolyvan)
-
-@dynamic toArray;
-@dynamic toString;
-
-- (NSArray *) toArray
-{
-    return [NSArray arrayWithObject:self];
-}
-
-- (NSString *) toString
-{
-    return [self description];
-}
-
-- (NSString *) toString: (NSString *) fmt
-{
-    return [NSString stringWithFormat:fmt, [self description]];
-}
-
-- (void) log
-{
-    [self log: nil];
-}
-
-
-- (void) log: (NSString*) fmt
-{
-    if (fmt)
-        NSLog(fmt, self);
-    else
-        NSLog(@"%@", self);
-}
-
+@interface NSString (HTML)
+- (NSString *) unescapeHTML;
+- (NSString *) escapeHTML;
+- (NSString *) stripHTML: (BOOL) replaceBlockTagsWithNewLine;
 @end

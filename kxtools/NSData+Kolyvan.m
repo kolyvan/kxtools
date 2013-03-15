@@ -1,7 +1,7 @@
 //
-//  ru.kolyvan.repo
-//  https://github.com/kolyvan
-//  
+//  ru.kolyvan.kxtools
+//  https://github.com/kolyvan/kxtools
+//
 
 //  Copyright (C) 2012, Konstantin Boukreev (Kolyvan)
 
@@ -30,10 +30,7 @@
 //
 //
 
-#import "KxMacros.h"
 #import "NSData+Kolyvan.h"
-#import "KxArc.h"
-#import <zlib.h>
 #import <CommonCrypto/CommonDigest.h>
 
 static NSData * base64encode(NSData * from)
@@ -190,90 +187,7 @@ static NSData * base64decode (NSData * from)
 
 - (NSString *) base64EncodedString
 {
-    NSString *s = [[NSString alloc] initWithData:base64encode(self)
-                                        encoding:NSASCIIStringEncoding];
-    return KX_AUTORELEASE(s);    
-}
-
-- (NSData *) gzip 
-{
-    if (self.length == 0)
-        return self;
-    
-    z_stream zs;
-
-    zs.next_in = (Bytef *)self.bytes;
-    zs.avail_in = (uInt)self.length;
-    zs.total_out = 0;    
-    zs.avail_out = 0;    
-    zs.zalloc = Z_NULL;
-    zs.zfree = Z_NULL;
-    zs.opaque = Z_NULL;
-    
-    NSMutableData *deflated = [NSMutableData dataWithLength:16384];
-    
-    if (Z_OK != deflateInit2(&zs, Z_DEFAULT_COMPRESSION, Z_DEFLATED, MAX_WBITS, 8, Z_DEFAULT_STRATEGY)) 
-        return nil;
-    
-    do {
-        if (zs.total_out >= deflated.length)
-            [deflated increaseLengthBy:16384];
-        
-        zs.next_out = deflated.mutableBytes + zs.total_out;
-        zs.avail_out = (uInt)(deflated.length - zs.total_out);
-        int status =  deflate(&zs, Z_FINISH);
-        
-        if (Z_OK != status && 
-            Z_STREAM_END != status)
-            return nil; // some error            
-        
-    } while (0 == zs.avail_out);
-    
-    deflateEnd(&zs);
-    deflated.length = zs.total_out;
-    
-    return deflated;
-}
-
-- (NSData *) gunzip
-{
-    NSUInteger halfLen = self.length / 2;
-    
-    NSMutableData *inflated = [NSMutableData dataWithLength:self.length + halfLen];
-            
-    z_stream zs;
-    
-    zs.next_in = (Bytef *)self.bytes;
-    zs.avail_in = (uInt)self.length;
-    zs.total_out = 0;
-    zs.avail_out = 0;    
-    zs.zalloc = Z_NULL;
-    zs.zfree = Z_NULL;
-    zs.opaque = Z_NULL;
-    
-    if (Z_OK != inflateInit2(&zs, MAX_WBITS)) 
-        return nil;
-
-    int status = Z_OK;
-    while (Z_OK == status) {
-        
-        if (zs.total_out >= inflated.length)
-            [inflated increaseLengthBy:halfLen];
-        
-        zs.next_out = inflated.mutableBytes + zs.total_out;
-        zs.avail_out = (uInt)(inflated.length - zs.total_out);
-        
-        status = inflate(&zs, Z_SYNC_FLUSH);        
-    }
-    
-    if ((Z_STREAM_END == status) && 
-        (Z_OK == inflateEnd(&zs))) {
-        
-        inflated.length = zs.total_out;
-        return inflated;
-    }
-
-    return nil;
+    return [[NSString alloc] initWithData:base64encode(self) encoding:NSASCIIStringEncoding];
 }
 
 - (NSData *) sha1
@@ -302,6 +216,23 @@ static NSData * base64decode (NSData * from)
     for(int i = 0; i < self.length; i++)
         [ms appendFormat:@"%02x", p[i]];
     return [ms copy];
+}
+
+@end
+
+@implementation NSString (BASE64)
+
+- (NSString *) base64encode
+{
+    NSData *data = [NSData dataWithBytes:[self UTF8String]
+                                  length:[self lengthOfBytesUsingEncoding:NSUTF8StringEncoding]];
+    return [data base64EncodedString];
+}
+
+- (NSString *) base64decode
+{
+    NSData *data = [NSData dataFromBase64String: self];
+    return [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
 }
 
 @end

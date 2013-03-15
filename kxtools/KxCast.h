@@ -1,7 +1,7 @@
 //
-//  ru.kolyvan.repo
-//  https://github.com/kolyvan
-//  
+//  ru.kolyvan.kxtools
+//  https://github.com/kolyvan/kxtools
+//
 
 //  Copyright (C) 2012, Konstantin Boukreev (Kolyvan)
 
@@ -14,10 +14,9 @@
 
 #import <Foundation/Foundation.h>
 
-
-extern NSException* logBadCastError(id obj, Class klass, const char *file, int line, const char *func);
-
+extern NSString *const BadCastException;
+extern NSException *mkBadCastException(id obj, Class klass, const char *file, int line, const char *func);
 
 #define $cast(obj, klass) ({ id p = (obj); \
     ((p && ![p isKindOfClass:[klass class]]) ? \
-    [logBadCastError(p, [klass class], __FILE__, __LINE__, __PRETTY_FUNCTION__) raise], nil : (klass *)p); })
+    [mkBadCastException(p, [klass class], __FILE__, __LINE__, __PRETTY_FUNCTION__) raise], nil : (klass *)p); })

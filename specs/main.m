@@ -7,17 +7,18 @@
 //
 
 #import <Cedar/Cedar.h>
-#import "KxArc.h"
+#import "KxConsole.h"
 
 int main(int argc, const char * argv[])
 {
     int result = 0;
     
-    KX_AUTORELEASE_POOL_BEGIN()
-
-    result = runSpecs();
+    @autoreleasepool {
         
-    KX_AUTORELEASE_POOL_END()
+        KxConsole.printlnf(@"run %stest%s ...", KxAnsiCodes.red, KxAnsiCodes.reset);
+        
+        result = runSpecs();
+    }
     
     return result;
 }

@@ -1,7 +1,7 @@
 //
-//  ru.kolyvan.repo
-//  https://github.com/kolyvan
-//  
+//  ru.kolyvan.kxtools
+//  https://github.com/kolyvan/kxtools
+//
 
 //  Copyright (C) 2012, Konstantin Boukreev (Kolyvan)
 
@@ -28,40 +28,27 @@
 // TapkuLibrary is licensed under the MIT License. 
 //
 
-#import <CommonCrypto/CommonDigest.h>
 #import "NSString+Kolyvan.h"
-#import "NSArray+Kolyvan.h"
-#import "NSData+Kolyvan.h"
-#import "KxTuple2.h"
-#define NSNUMBER_SHORTHAND
-#import "KxMacros.h"
-#import "KxArc.h"
+#import <CommonCrypto/CommonDigest.h>
 
 @implementation NSString (Kolyvan)
-
-@dynamic first;
-@dynamic last;
 
 + (NSString *) uniqueString
 {
 	CFUUIDRef uuidObj = CFUUIDCreate(nil);
     NSString *uuidString = (NSString* )CFBridgingRelease(CFUUIDCreateString(nil, uuidObj));
 	CFRelease(uuidObj);
-	return KX_AUTORELEASE(uuidString);
+	return uuidString;
 }
 
 + (NSString *) stringFromAsciiBytes: (NSData *) data
 {
-    NSString *s =  [[NSString alloc] initWithData:data
-                                         encoding:NSASCIIStringEncoding];
-    return  KX_AUTORELEASE(s);
+    return [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
 }
 
 + (NSString *) stringFromUtf8Bytes: (NSData *) data
 {
-    NSString *s = [[NSString alloc] initWithData:data
-                                        encoding:NSUTF8StringEncoding];
-    return KX_AUTORELEASE(s);
+    return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 }
 
 - (unichar) first
@@ -95,7 +82,6 @@
     return [self substringFromIndex: n];        
 }
 
-
 - (NSString *) md5
 {
     const char *str = [self UTF8String];
@@ -110,21 +96,10 @@
     return out;     
 }
 
-- (BOOL) isEmpty 
-{
-    return [self length] == 0;
-}
-
-- (BOOL) nonEmpty
-{
-    return [self length] > 0;    
-}
-
 - (BOOL) contains:(NSString *)string 
 {
-    if ([string isEmpty])
-        return YES;
-        
+    if (!string.length)
+        return YES;        
     return [self rangeOfString:string].location != NSNotFound;
 }
 
@@ -141,8 +116,7 @@
 {
     static NSCharacterSet *charset = nil;
     if (!charset)
-        charset = [NSCharacterSet lowercaseLetterCharacterSet];    
-    
+        charset = [NSCharacterSet lowercaseLetterCharacterSet];
     return [charset isSupersetOfSet:[NSCharacterSet characterSetWithCharactersInString: self]];
 }
 
@@ -151,136 +125,7 @@
     static NSCharacterSet *charset = nil;
     if (!charset)
         charset = [NSCharacterSet uppercaseLetterCharacterSet];
-    
     return [charset isSupersetOfSet:[NSCharacterSet characterSetWithCharactersInString: self]];
-}
-
-- (NSString *) escapeHTML
-{
-  	NSCharacterSet *chs = [NSCharacterSet characterSetWithCharactersInString:@"<>&\""];
-	NSMutableString *s = [NSMutableString string];
-	
-	NSInteger start = 0;
-	NSInteger len = [self length];
-	
-	while (start < len) {
-		NSRange r = [self rangeOfCharacterFromSet:chs 
-                                          options:0 
-                                            range:NSMakeRange(start, len-start)];
-		
-        if (r.location == NSNotFound) {
-			[s appendString:[self substringFromIndex:start]];
-			break;
-		}
-		
-		if (start < r.location) {
-			[s appendString:[self substringWithRange:NSMakeRange(start, r.location-start)]];
-		}
-		
-		switch ([self characterAtIndex:r.location]) {
-			case '<': [s appendString:@"&lt;"]; break;
-			case '>': [s appendString:@"&gt;"]; break;
-			case '"': [s appendString:@"&quot;"]; break;
-			case '&': [s appendString:@"&amp;"]; break;
-		}
-		
-		start = r.location + 1;
-	}
-	
-	return s;
-}
-
-- (NSString *) unescapeHTML
-{
-	NSCharacterSet *chs = [NSCharacterSet characterSetWithCharactersInString:@"&"];    
-	NSMutableString *s = [NSMutableString string];
-	NSMutableString *target = [self mutableCopy];
-	
-	while ([target length] > 0) {
-		NSRange r = [target rangeOfCharacterFromSet:chs];
-		if (r.location == NSNotFound) {
-			[s appendString:target];
-			break;
-		}
-		
-		if (r.location > 0) {
-			[s appendString:[target substringToIndex:r.location]];
-			[target deleteCharactersInRange:NSMakeRange(0, r.location)];
-		}
-		
-		if ([target hasPrefix:@"&lt;"]) {
-			[s appendString:@"<"];
-			[target deleteCharactersInRange:NSMakeRange(0, 4)];
-		} else if ([target hasPrefix:@"&gt;"]) {
-			[s appendString:@">"];
-			[target deleteCharactersInRange:NSMakeRange(0, 4)];
-		} else if ([target hasPrefix:@"&quot;"]) {
-			[s appendString:@"\""];
-			[target deleteCharactersInRange:NSMakeRange(0, 6)];
-		} else if ([target hasPrefix:@"&#39;"]) {
-			[s appendString:@"'"];
-			[target deleteCharactersInRange:NSMakeRange(0, 5)];
-		} else if ([target hasPrefix:@"&amp;"]) {
-			[s appendString:@"&"];
-			[target deleteCharactersInRange:NSMakeRange(0, 5)];
-		} else if ([target hasPrefix:@"&hellip;"]) {
-			[s appendString:@"вА¶"];
-			[target deleteCharactersInRange:NSMakeRange(0, 8)];
-		} else {
-			[s appendString:@"&"];
-			[target deleteCharactersInRange:NSMakeRange(0, 1)];
-		}
-	}
-	
-    KX_RELEASE(target);
-	return s;
-}
-
-- (NSString *) stripHTML: (BOOL) addNewLine
-{
-    NSMutableString *ms = [NSMutableString string];
-    
-    NSScanner *scanner = [NSScanner scannerWithString:self];
-    [scanner setCharactersToBeSkipped:nil];
-    
-    while (!scanner.isAtEnd) {
-        
-        NSString *s, *tag = nil;
-        
-        if ([scanner scanUpToString:@"<" intoString:&s])
-            [ms appendString:s];
-        
-        if (![scanner scanString:@"<" intoString:nil])
-            break;
-        
-        if ([scanner scanUpToString:@">" intoString:&tag] &&
-            [scanner scanString:@">" intoString:nil]) {
-            
-            if (addNewLine) {
-                
-                tag = tag.lowercaseString.trimmed;
-                
-                if ([tag hasSuffix:@"/"]) // for case of <br />
-                    tag = [tag substringToIndex:tag.length-1].trimmed;
-                
-                if ([tag isEqualToString:@"br"] ||
-                    [tag isEqualToString:@"p"] ||
-                    [tag isEqualToString:@"div"] ||
-                    [tag isEqualToString:@"blockquote"]) {
-                    
-                    [ms appendString:@"\n"];
-                }
-            }
-            
-        } else {
-            
-            [ms appendString:@"<"];
-            if (tag.length)
-                [ms appendString:tag];
-        }
-    }
-    
-    return ms;
 }
 
 - (NSString *) trimmed
@@ -295,7 +140,7 @@
 
 - (NSString *) prepend:(NSString *)string 
 {
-    return [NSString stringWithFormat:@"%@%@", string, self];
+    return [string append:self];
 }
 
 - (NSArray *) split 
@@ -308,45 +153,37 @@
     return [self componentsSeparatedByString:string];
 }
 
-- (KxTuple2 *) splitAt:(NSInteger)position
-{
-    return [KxTuple2 first: [self substringToIndex:position] second: [self substringFromIndex:position]];
-}
-
 - (NSArray *) lines 
 {
     return [self componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];    
 }
 
 - (NSArray *) lines: (NSInteger) maxLen
-{   
-    return [[self lines] flatMap:^id(id elem) {
+{
+    NSMutableArray *result = [NSMutableArray array];
+    
+    for (NSString *line in self.lines) {
         
-        NSString *s = elem;
-        
-        if (s.length < maxLen) 
-            return s;
-        
-        NSMutableArray *bb = [[NSMutableArray alloc] init];
+        NSString *s = line;
         
         while (s.length > maxLen) {
             
-            // try to split a line by space            
+            // try to split a line by space
             NSInteger n = maxLen;
             while (n && [s characterAtIndex:n] != 32) {
                 --n;
             }
-            if (n == 0) 
+            if (n == 0)
                 n = maxLen;
-            
-            KxTuple2 * tuple = [s splitAt:n];
-            [bb addObject:tuple.first];            
-            s = tuple.second;            
+            [result addObject:[s substringToIndex:n]];
+            s = [s substringFromIndex:n];
         }
-        
-        [bb addObject: s];
-        return bb;        
-    }];
+           
+        if (s.length)
+            [result addObject:s];
+    }
+
+    return [result copy];
 }
 
 - (NSString *) sliceFrom: (NSInteger) from until: (NSInteger) until
@@ -355,31 +192,12 @@
     return [self substringWithRange: NSMakeRange(MAX(0, from), len)];
 }
 
-
-- (NSString *) base64encode 
-{
-    NSData * d = [NSData dataWithBytes:[self UTF8String] 
-                                length:[self lengthOfBytesUsingEncoding:NSUTF8StringEncoding]];    
-    return [d base64EncodedString];
-}
-
-- (NSString *) base64decode
-{
-    return [NSString stringFromAsciiBytes: [NSData dataFromBase64String: self]];
-}
-
 - (NSArray *) toArray
 {
-    // NSMutableArray *result = [NSMutableArray arrayWithCapacity:self.length];
     NSMutableArray * result = [NSMutableArray arrayWithCapacity:self.length];    
     for (int i = 0; i < self.length; ++i)
-        [result addObject: $ushort([self characterAtIndex: i])];    
+        [result addObject: @([self characterAtIndex: i])];
     return result;
-}
-
-- (NSString *) toString 
-{ 
-    return [NSString stringWithString:self];
 }
 
 - (NSUInteger) integerValueFromHex

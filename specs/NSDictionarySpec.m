@@ -12,11 +12,6 @@
 
 #import "NSDictionary+Kolyvan.h"
 #import "KxTuple2.h"
-#define NSNUMBER_SHORTHAND
-#import "KxMacros.h"
-#import "KxUtils.h"
-
-
 
 SPEC_BEGIN(NSDictionaryKolyvan)
 describe(@"NSDictionary (Kolyvan)", ^{
@@ -26,18 +21,7 @@ describe(@"NSDictionary (Kolyvan)", ^{
         
         dict = [NSDictionary dictionaryWithObjectsAndKeys:@"apple", @"red", @"sumbarine", @"yellow", nil];
     });
-    
-    it(@"create", ^{
-        
-        assertThat(KxUtils.dictionary(@"apple", @"red", @"sumbarine", @"yellow", nil), equalTo(dict));        
-    });    
-    
-    it(@"properties", ^{        
-        assertThatBool(dict.isEmpty, equalToBool(NO));        
-        assertThatBool(dict.nonEmpty, equalToBool(YES));
-        assertThatInteger(dict.count, equalToInteger(2));        
-    });
-        
+            
     it(@"contains", ^{
         assertThatBool([dict contains: @"red"], equalToBool(YES));     
         assertThatBool([dict contains: @"yellow"], equalToBool(YES));
@@ -52,19 +36,20 @@ describe(@"NSDictionary (Kolyvan)", ^{
     });
     
     it(@"map", ^{
-        assertThat([dict map: ^(id key, id obj) { return $integer([obj length]); }],
-                   equalTo(KxUtils.dictionary($integer(5), @"red", $integer(9), @"yellow", nil)));
+        assertThat([dict map: ^(id key, id obj) { return @([obj length]); }],
+                   equalTo(@{@"red" : @(5), @"yellow" : @(9)}));
+        
     }); 
     
     it(@"toArray", ^{
         assertThat(dict.toArray,
-                   equalTo(KxUtils.array(KxUtils.tuple(@"red", @"apple"), 
-                                         KxUtils.tuple(@"yellow", @"sumbarine"), nil)));
+                   equalTo(@[[KxTuple2 first:@"red" second:@"apple"],
+                             [KxTuple2 first:@"yellow" second:@"sumbarine"]]));
     });
     
     it(@"mutable update", ^{
         
-        NSMutableDictionary *md = KX_AUTORELEASE([[NSMutableDictionary alloc] init]);
+        NSMutableDictionary *md = [[NSMutableDictionary alloc] init];
         
         [md update: @"red" value: @"apple"];
         assertThat([md get: @"red"], equalTo(@"apple"));
@@ -100,7 +85,7 @@ describe(@"NSDictionary (Kolyvan)", ^{
     
     it(@"get:orSet:", ^{
         
-        NSMutableDictionary *md = KX_AUTORELEASE([[NSMutableDictionary alloc] init]);
+        NSMutableDictionary *md = [[NSMutableDictionary alloc] init];
         
         [md get:@"red" orSet: ^{ return (id)nil; }];
         assertThat([md get: @"red"], equalTo(nil));        
@@ -116,6 +101,27 @@ describe(@"NSDictionary (Kolyvan)", ^{
         
         [md get:@"yellow" orSet: ^{ return @"sand"; }];
         assertThat([md get: @"yellow"], equalTo(@"sand"));        
+        
+    });
+    
+    it(@"valueForKey:ofClass:", ^{
+        
+        NSDictionary *dict = @{@"string" : @"1",
+                               @"number" : @(1),
+                               @"array" : @[@(1)],
+                               };
+        
+        assertThat([dict stringForKey: @"string"], equalTo(@"1"));
+        assertThat([dict numberForKey: @"string"], equalTo(nil));
+        assertThat([dict arrayForKey: @"string"], equalTo(nil));        
+        
+        assertThat([dict stringForKey: @"number"], equalTo(nil));
+        assertThat([dict numberForKey: @"number"], equalTo(@(1)));
+        assertThat([dict arrayForKey: @"number"], equalTo(nil));
+        
+        assertThat([dict stringForKey: @"array"], equalTo(nil));
+        assertThat([dict numberForKey: @"array"], equalTo(nil));
+        assertThat([dict arrayForKey: @"array"], equalTo(@[@(1)]));
         
     });
     

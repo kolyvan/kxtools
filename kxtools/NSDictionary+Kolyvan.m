@@ -1,7 +1,7 @@
 //
-//  ru.kolyvan.repo
-//  https://github.com/kolyvan
-//  
+//  ru.kolyvan.kxtools
+//  https://github.com/kolyvan/kxtools
+//
 
 //  Copyright (C) 2012, Konstantin Boukreev (Kolyvan)
 
@@ -12,22 +12,8 @@
 //  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #import "NSDictionary+Kolyvan.h"
-#import "NSArray+Kolyvan.h"
-#import "KxTuple2.h"
-#import "KxUtils.h"
-
 
 @implementation NSDictionary (Kolyvan)
-
-- (BOOL) isEmpty 
-{
-    return [self count] == 0;
-}
-
-- (BOOL) nonEmpty
-{
-    return [self count] > 0;
-}
 
 - (BOOL) contains:(id)key
 {
@@ -64,30 +50,44 @@
     return [NSDictionary dictionaryWithObjects:objects forKeys:keys];    
 }
 
-/*
-- (id) fold: (id) start with: (id (^)(id acc, id key, id elem)) block
+- (id) valueForKey: (NSString *) key
+           ofClass: (Class) klazz
 {
-    id acc = start;
-    NSEnumerator *e = [self keyEnumerator];
-    id key;
-    while ((key = [e nextObject]))
-        acc = block(acc, key, [self objectForKey:key]);    
-    return acc;
-}
-*/
-
-- (NSArray *) toArray
-{
-    NSMutableArray * acc = [NSMutableArray arrayWithCapacity:self.count];
-    [self each: ^(id key, id elem) {
-        [acc addObject: KxUtils.tuple(key, elem)];
-    }];    
-    return acc;
+    id x = [self valueForKey:key];
+    return [x isKindOfClass:klazz] ? x : nil;
 }
 
+- (NSData *) dataForKey: (NSString *) key
+{
+    return [self valueForKey:key ofClass:[NSData class]];
+}
+
+- (NSString *) stringForKey: (NSString *) key
+{
+    return [self valueForKey:key ofClass:[NSString class]];
+}
+
+- (NSNumber *) numberForKey: (NSString *) key
+{
+    return [self valueForKey:key ofClass:[NSNumber class]];
+}
+
+- (NSDate *) dateForKey: (NSString *) key
+{
+    return [self valueForKey:key ofClass:[NSDate class]];
+}
+
+- (NSArray *) arrayForKey: (NSString *) key
+{
+    return [self valueForKey:key ofClass:[NSArray class]];
+}
+
+- (NSDictionary *) dictionaryForKey: (NSString *) key
+{
+    return [self valueForKey:key ofClass:[NSDictionary class]];
+}
 
 @end
-
 
 
 @implementation NSMutableDictionary (Kolyvan)

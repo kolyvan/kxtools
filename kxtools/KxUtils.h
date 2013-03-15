@@ -1,7 +1,7 @@
 //
-//  ru.kolyvan.repo
-//  https://github.com/kolyvan
-//  
+//  ru.kolyvan.kxtools
+//  https://github.com/kolyvan/kxtools
+//
 
 //  Copyright (C) 2012, Konstantin Boukreev (Kolyvan)
 
@@ -14,21 +14,24 @@
 
 #import <Foundation/Foundation.h>
 
-
-@class KxTuple2;
-@class KxList;
+typedef void (^KxUtilsEnumerateItemsBlock)(NSFileManager *fm, NSString *path, NSDictionary *attr);
 
 typedef struct {
     
-    // file managers and path
-    
-    NSFileManager * (*fileManager)();
-    BOOL (*fileExists)(NSString *filepath); 
-    NSError * (*ensureDirectory)(NSString * path);
+    // file managers
+        
+    BOOL (*fileExists)(NSString *path); 
+    BOOL (*ensureDirectory)(NSString * path, NSError **perror);
+    BOOL (*saveObjectAsJson)(id object, NSString *path, NSError **perror);
+    id (*loadObjectFromJson)(NSString *path, NSError **perror);
+    void (*enumerateItemsAtPath)(NSString *path, BOOL subDirs, KxUtilsEnumerateItemsBlock block);
+    NSArray * (*filesAsPath)(NSString *path);
     
 #ifndef __IPHONE_OS_VERSION_MAX_ALLOWED
     NSString * (*appBundleID)();
 #endif
+    
+    // pathes
     
     NSString * (*appPath)(); 
     NSString * (*resourcePath)();
@@ -54,14 +57,7 @@ typedef struct {
     
     NSString * (*errorMessage)(NSError *error);
     NSString * (*completeErrorMessage)(NSError *error);
-
-    // factory functions
     
-    NSArray * (*array)(id first, ...);
-    NSDictionary * (*dictionary)(id firstObj, ...);
-    NSString * (*format)(NSString * fmt, ...);    
-    KxTuple2 * (*tuple)(id first, id second);
-    KxList* (*list)(id head, ...);    
     
 } KxUtils_t;
 

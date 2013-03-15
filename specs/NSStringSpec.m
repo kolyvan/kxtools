@@ -12,18 +12,16 @@
 #import <OCHamcrest/OCHamcrest.h>
 
 #import "NSString+Kolyvan.h"
-#define NSNUMBER_SHORTHAND
-#import "KxMacros.h"
-#import "KxUtils.h"
+#import "NSString+HTML.h"
+#import "NSData+Kolyvan.h"
 #import "KxTuple2.h"
-
 
 SPEC_BEGIN(NSStringKolyvan)
 describe(@"NSString (Kolyvan)", ^{
+    
     beforeEach(^{
         
     });
-
     
     it(@"compute md5", ^{
         assertThat([@"" md5], equalTo(@"d41d8cd98f00b204e9800998ecf8427e"));
@@ -32,17 +30,6 @@ describe(@"NSString (Kolyvan)", ^{
     
     it(@"compare uniqueString", ^{        
         assertThat([NSString uniqueString], isNot(equalTo([NSString uniqueString])));        
-    });
-        
-    it(@"empty", ^{
-        assertThatBool(YES, equalToBool([@"" isEmpty]));
-        assertThatBool(NO, equalToBool([@"moo" isEmpty]));        
-        
-        assertThatBool(NO, equalToBool([@"" nonEmpty]));
-        assertThatBool(YES, equalToBool([@"moo" nonEmpty]));        
-        
-        assertThatBool(YES, equalToBool(@"".isEmpty));        
-        assertThatBool(NO, equalToBool(@"".nonEmpty));
     });
     
     it(@"contains", ^{
@@ -84,13 +71,15 @@ describe(@"NSString (Kolyvan)", ^{
     });
     
     it(@"escaping html", ^{
+        
         NSString * html = @"<script>alert('you are hacked!')</script>";
         NSString * escaped = @"&lt;script&gt;alert('you are hacked!')&lt;/script&gt;";
         assertThat(escaped, equalTo([html escapeHTML]));
-        assertThat(html, equalTo([escaped unescapeHTML]));        
+        assertThat(html, equalTo([escaped unescapeHTML]));
     });
         
     it(@"strip html", ^{
+        
         assertThat([@"" stripHTML: NO], equalTo(@""));
         assertThat([@"foo" stripHTML: NO], equalTo(@"foo"));
         assertThat([@"<br />" stripHTML: NO], equalTo(@""));
@@ -126,24 +115,22 @@ describe(@"NSString (Kolyvan)", ^{
     
     it(@"lines", ^{
 
-        assertThat([@"foo\nbar\nmoo" lines], equalTo([NSArray arrayWithObjects: @"foo", @"bar", @"moo", nil]));        
+        assertThat([@"foo\nbar\nmoo" lines], equalTo(@[@"foo", @"bar", @"moo"]));
         
         assertThat([@"foo bar\nbuzz\nby space" lines: 4], 
-                   equalTo([NSArray arrayWithObjects: @"foo", @" bar", @"buzz", @"by", @" spa", @"ce", nil]));                
-
+                   equalTo(@[@"foo", @" bar", @"buzz", @"by", @" spa", @"ce"]));
     });
-    
     
     it(@"slice", ^{
         assertThat([@"0123456789" sliceFrom: 1 until: 3], equalTo(@"12"));
         assertThat([@"0123456789" sliceFrom: -1 until: 10], equalTo(@"0123456789"));        
     });
-        
+    
     it(@"base64 encode", ^{
         NSString * string =  @"The quick brown fox jumps over the lazy dog"; 
         NSString * encoded = @"VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wcyBvdmVyIHRoZSBsYXp5IGRvZw==";
         
-        assertThat([string base64encode], equalTo(encoded));        
+        assertThat([string base64encode], equalTo(encoded));
         assertThat([@" " base64encode], equalTo(@"IA=="));
         assertThat([@"" base64encode], equalTo(@""));
         
@@ -157,19 +144,11 @@ describe(@"NSString (Kolyvan)", ^{
         assertThat([@"IA==" base64decode], equalTo(@" "));
         assertThat([@"" base64decode], equalTo(@""));
     });
-    
+        
     it(@"toArray", ^{
 
-        assertThat(@"abcd".toArray, equalTo(KxUtils.array($ushort('a'), 
-                                                          $ushort('b'), 
-                                                          $ushort('c'), 
-                                                          $ushort('d'), nil)));
-        
-        assertThat(@"АБВГ".toArray, equalTo(KxUtils.array($ushort(1040), 
-                                                          $ushort(1041), 
-                                                          $ushort(1042), 
-                                                          $ushort(1043), nil)));
-        
+        assertThat(@"abcd".toArray, equalTo(@[@('a'), @('b'), @('c'), @('d')]));        
+        assertThat(@"АБВГ".toArray, equalTo(@[@(1040),@(1041),@(1042),@(1043)]));        
     });  
     
     it(@"first, last, tail, butlast, take, drop", ^{

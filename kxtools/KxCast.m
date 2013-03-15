@@ -1,6 +1,6 @@
 //
-//  ru.kolyvan.repo
-//  https://github.com/kolyvan
+//  ru.kolyvan.kxtools
+//  https://github.com/kolyvan/kxtools
 //  
 
 //  Copyright (C) 2012, Konstantin Boukreev (Kolyvan)
@@ -14,16 +14,12 @@
 
 #import "KxCast.h"
 
+NSString *const BadCastException = @"BadCastException";
 
-
-NSException* logBadCastError(id obj, Class klass, const char *file, int line, const char *func)
+NSException* mkBadCastException(id obj, Class klass, const char *file, int line, const char *func)
 {    
-    NSString * reason = [NSString stringWithFormat:@"Object \'%@\' is not of type %@ as expected", obj, klass];    
-    
-    NSLog(@"Badcast error (%@) in %s, %s:%d", reason, func, file, line);
-            
-    return [NSException exceptionWithName:@"BadCastError" 
-                                   reason:reason
-                                 userInfo:nil];
+    NSString *reason = [NSString stringWithFormat:@"Object \'%@\' is not of type %@ as expected", obj, klass];
+    NSLog(@"BadCast: %@ in %s, %s:%d", reason, func, file, line);
+    return [NSException exceptionWithName:BadCastException reason:reason userInfo:nil];
 }
 

@@ -1,7 +1,7 @@
 //
-//  ru.kolyvan.repo
-//  https://github.com/kolyvan
-//  
+//  ru.kolyvan.kxtools
+//  https://github.com/kolyvan/kxtools
+//
 
 //  Copyright (C) 2012, Konstantin Boukreev (Kolyvan)
 
@@ -11,19 +11,10 @@
 
 //  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+
 #import <Foundation/Foundation.h>
 
-
-@interface NSObject (Kolyvan)
-@property (nonatomic, readonly, retain) NSArray* toArray;
-@property (nonatomic, readonly, retain) NSString* toString;
-
-- (NSArray *) toArray;
-
-- (NSString *) toString;
-- (NSString *) toString: (NSString *) fmt;
-
-- (void) log;
-- (void) log: (NSString*) fmt;
-
+@interface NSData (ZLIB)
+- (NSData *) gzip;
+- (NSData *) gunzip;
 @end

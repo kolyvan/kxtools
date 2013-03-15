@@ -1,7 +1,7 @@
 //
-//  ru.kolyvan.repo
-//  https://github.com/kolyvan
-//  
+//  ru.kolyvan.kxtools
+//  https://github.com/kolyvan/kxtools
+//
 
 //  Copyright (C) 2012, Konstantin Boukreev (Kolyvan)
 
@@ -14,24 +14,34 @@
 
 #import <Foundation/Foundation.h>
 
-#import "KxArc.h"
+@interface KxTuple2 : NSObject<NSCopying, NSCoding>
 
-@interface KxTuple2 : NSObject<NSCopying, NSCoding> { 
-@private
-    id _first;
-    id _second;            
-}
-
-@property (nonatomic, readonly, KX_PROP_STRONG) id first;
-@property (nonatomic, readonly, KX_PROP_STRONG) id second;
+@property (nonatomic, readonly, strong) id first;
+@property (nonatomic, readonly, strong) id second;
 
 + (KxTuple2 *) first:(id) first second:(id) second;
-
 - (id) initWithFirst:(id) first andSecond:(id) second;
 
 - (KxTuple2 *) swap;
+- (BOOL) isEqualToTuple:(KxTuple2 *) other;
 
-//- (BOOL) isEqual:(id) other;
-//- (NSUInteger) hash; 
+- (NSArray *) toArray;
+- (NSDictionary *) toDictionary;
 
+@end
+
+
+@interface NSArray (KxTuple2)
+- (KxTuple2 *) partition: (BOOL(^)(id elem)) block;
+- (NSArray *) zip: (NSArray *) other;
+- (NSArray *) zipWithIndex;
+- (KxTuple2 *) unzip;
+@end
+
+@interface NSDictionary (KxTuple2)
+- (NSArray *) toArray;
+@end
+
+@interface NSString (KxTuple2)
+- (KxTuple2 *) splitAt:(NSInteger)position;
 @end

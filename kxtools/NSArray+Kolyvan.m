@@ -1,7 +1,7 @@
 //
-//  ru.kolyvan.repo
-//  https://github.com/kolyvan
-//  
+//  ru.kolyvan.kxtools
+//  https://github.com/kolyvan/kxtools
+//
 
 //  Copyright (C) 2012, Konstantin Boukreev (Kolyvan)
 
@@ -12,25 +12,9 @@
 //  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-#import "KxTuple2.h"
 #import "NSArray+Kolyvan.h"
-#import "KxUtils.h"
-#import "KxArc.h"
-#define NSNUMBER_SHORTHAND 
-#import "KxMacros.h"
 
 @implementation NSArray (Kolyvan)
-
-
-- (BOOL) isEmpty 
-{
-    return [self count] == 0;
-}
-
-- (BOOL) nonEmpty
-{
-    return [self count] > 0;
-}
 
 - (id) first
 {   
@@ -82,7 +66,7 @@
     NSMutableArray *result = [NSMutableArray arrayWithCapacity:[self count]];
     for (id elem in self)
         [result addObject:block(elem)];
-    return [result toArray];
+    return [result copy];
 }
 
 - (NSArray *) flatMap: (id (^)(id elem)) block
@@ -93,7 +77,7 @@
         if (r)
             [result appendFlat:r];
     }
-    return [result toArray];
+    return [result copy];
     
 }
 
@@ -144,32 +128,16 @@
 
 - (NSArray *) filter: (BOOL(^)(id elem)) block 
 {
-    NSMutableArray *acc = [NSMutableArray arrayWithCapacity:[self count]];
-    
+    NSMutableArray *acc = [NSMutableArray arrayWithCapacity:[self count]];    
     for (id elem in self)
         if (block(elem))
             [acc addObject:elem];
-        
-    return [acc toArray];
+    return [acc copy];
 }
 
 - (NSArray *) filterNot: (BOOL(^)(id elem)) block
 {
     return [self filter: ^(id elem){ return (BOOL)!block(elem); }];
-}
-
-- (KxTuple2 *) partition: (BOOL(^)(id elem)) block
-{
-    NSMutableArray *acc = [NSMutableArray arrayWithCapacity:self.count];
-    NSMutableArray *accNot = [NSMutableArray arrayWithCapacity:self.count];    
-    
-    for (id elem in self)
-        if (block(elem))
-            [acc addObject:elem];
-        else
-            [accNot addObject:elem];
-    
-    return [KxTuple2 first:[acc toArray] second:[accNot toArray]];
 }
 
 - (id) find: (BOOL(^)(id elem)) block 
@@ -186,52 +154,14 @@
     return [self find: block] != nil;
 }
 
-- (NSString *) mkString
+- (NSString *) toString
 {
     return [self componentsJoinedByString:@""];
 }
 
-- (NSString *) mkString:(NSString *)separator 
+- (NSString *) toString:(NSString *)separator
 {
     return [self componentsJoinedByString:separator];
-}
-
-- (NSArray *) zip: (NSArray *) other
-{
-    NSInteger len = MIN(self.count, other.count);
-    
-    NSMutableArray * result = [NSMutableArray arrayWithCapacity:len];
-     
-    for (NSInteger i = 0; i < len; ++i) { 
-        [result addObject: [KxTuple2 first: [self objectAtIndex:i] 
-                                  second: [other objectAtIndex:i]]];
-    }
-             
-    return result.toArray;
-}
-
-- (NSArray *) zipWithIndex
-{
-    NSInteger len = self.count;    
-    NSMutableArray * result = [NSMutableArray arrayWithCapacity:len];    
-    for (NSInteger i = 0; i < len; ++i) { 
-        [result addObject: [KxTuple2 first: [self objectAtIndex:i] 
-                                  second: $integer(i)]];
-    }    
-    return result.toArray;
-}
-
-- (KxTuple2 *) unzip
-{
-    NSMutableArray * l = [NSMutableArray arrayWithCapacity:[self count]];
-    NSMutableArray * r = [NSMutableArray arrayWithCapacity:[self count]];    
-    
-    for (KxTuple2 *p in self) {
-        [l addObject:p.first];
-        [r addObject:p.second];
-    }
-    
-    return KxUtils.tuple(l, r);
 }
 
 + (NSArray *) rangeFrom: (NSInteger) start until: (NSInteger) end step: (NSInteger) step
@@ -260,11 +190,6 @@
     return [NSArray arrayWithArray:b];    
 }
 
-- (NSArray *) toArray 
-{
-    return [NSArray arrayWithArray:self];
-}
-
 - (NSArray *) unique
 {
     NSMutableArray *ma = [NSMutableArray array];
@@ -273,7 +198,7 @@
         if (![ma containsObject:elem])
             [ma addObject:elem];
     
-    return ma.nonEmpty ? [ma copy] : self;
+    return ma.count ? [ma copy] : self;
 }
 
 - (NSArray *) shuffle
@@ -301,11 +226,6 @@
     [self addObjectsFromArray:objects];
 }
 
-- (void) appendAll:(NSArray *)xs
-{
-    [self addObjectsFromArray:xs];
-}
-
 - (void) appendFlat:(id) obj
 {   
     if ([obj isKindOfClass:[NSArray class]]) {
@@ -329,25 +249,6 @@
     }
 }
 
-
-/*
-- (void) unshift:(id) object 
-{
-    if (object)        
-        [self insertObject:object atIndex:0]; 
-}
-
-- (id) shift
-{    
-    if (self.isEmpty)
-        return nil;
-    
-    id result = [[self.first retain] autorelease];
-    [self removeObjectAtIndex:0];
-    return result;
-}
-*/
-
 - (void) push:(id) object 
 {
     if (object)        
@@ -356,12 +257,12 @@
 
 - (id) pop
 {    
-    if (self.isEmpty)
+    if (!self.count)
         return nil;
     
-    id result = KX_RETAIN(self.last);
+    id result = self.last;
     [self removeLastObject];
-    return KX_AUTORELEASE(result);
+    return result;
 }
 
 - (void)shuffle

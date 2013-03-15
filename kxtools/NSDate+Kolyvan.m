@@ -1,7 +1,7 @@
 //
-//  ru.kolyvan.repo
-//  https://github.com/kolyvan
-//  
+//  ru.kolyvan.kxtools
+//  https://github.com/kolyvan/kxtools
+//
 
 //  Copyright (C) 2012, Konstantin Boukreev (Kolyvan)
 
@@ -41,9 +41,6 @@
 
 
 #import "NSDate+Kolyvan.h"
-#import "KxMacros.h"
-#import "KxArc.h"
-#import "KxUtils.h"
 
 #define YMD_COMPONENTS NSMonthCalendarUnit|NSDayCalendarUnit|NSYearCalendarUnit
 #define HMS_COMPONENTS NSMinuteCalendarUnit|NSSecondCalendarUnit|NSHourCalendarUnit
@@ -152,9 +149,7 @@ static inline NSCalendar* currentCal() { return [NSCalendar currentCalendar]; }
     [dc setHour: hours];
     [dc setMinute: minutes];
     [dc setSecond: seconds];
-    NSDate* result = [currentCal() dateByAddingComponents:dc toDate:self options:0];
-    KX_RELEASE(dc);
-    return result;
+    return [currentCal() dateByAddingComponents:dc toDate:self options:0];
 }
 
 - (NSDate *) midnight 
@@ -251,10 +246,9 @@ static inline NSCalendar* currentCal() { return [NSCalendar currentCalendar]; }
     NSTimeZone * oldTZ = calendar.timeZone; 
     if (timeZone)
         calendar.timeZone = timeZone;
-    NSDate * result = [calendar dateFromComponents:dc];
+    NSDate *result = [calendar dateFromComponents:dc];
     if (timeZone)
-        calendar.timeZone = oldTZ;    
-    KX_RELEASE(dc);
+        calendar.timeZone = oldTZ;
     return result;
 }
 
@@ -302,9 +296,7 @@ static inline NSCalendar* currentCal() { return [NSCalendar currentCalendar]; }
     
     [formatter setDateFormat:format];    
     
-    NSDate *result = [formatter dateFromString:string];
-    KX_RELEASE(formatter);
-    return result;
+    return [formatter dateFromString:string];
 }
 
 + (NSDate *) dateWithISO8601String:(NSString *) string
@@ -345,9 +337,7 @@ static inline NSCalendar* currentCal() { return [NSCalendar currentCalendar]; }
     if ([string hasSuffix:@"Z"])
         string = [[string substringToIndex:(string.length-1)] stringByAppendingString:@"GMT"];
     NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
-    NSDate * result = [NSDate date:string format:@"EEE, d MMM yyyy HH:mm:ss ZZZ" locale:locale];
-    KX_RELEASE(locale);
-    return result;
+    return [NSDate date:string format:@"EEE, d MMM yyyy HH:mm:ss ZZZ" locale:locale];
 }
 
 + (NSDate *) dateWithAltRSSDateString:(NSString *) string
@@ -355,9 +345,7 @@ static inline NSCalendar* currentCal() { return [NSCalendar currentCalendar]; }
     if ([string hasSuffix:@"Z"])
         string = [[string substringToIndex:(string.length-1)] stringByAppendingString:@"GMT"];
     NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];    
-    NSDate * result = [NSDate date:string format:@"d MMM yyyy HH:mm:ss ZZZ" locale:locale];
-    KX_RELEASE(locale);
-    return result;    
+    return [NSDate date:string format:@"d MMM yyyy HH:mm:ss ZZZ" locale:locale];
 }
 
 + (NSDate *) dateWithHTTPDateString:(NSString *) string
@@ -379,8 +367,6 @@ static inline NSCalendar* currentCal() { return [NSCalendar currentCalendar]; }
             result = [NSDate date:string format:@"EEE MMM d HH:mm:ss yyyy" locale:locale];
         }
     }
-    
-    KX_RELEASE(locale);
     return result;
 }
 
@@ -400,9 +386,7 @@ static inline NSCalendar* currentCal() { return [NSCalendar currentCalendar]; }
     if (tz)
         [formatter setTimeZone:tz];
     
-    NSString * s = [formatter stringFromDate:self];    
-    KX_RELEASE(formatter);
-    return s;
+    return [formatter stringFromDate:self];
 }
 
 - (NSString *)formattedDateStyle:(NSDateFormatterStyle) dateStyle 
@@ -427,9 +411,7 @@ static inline NSCalendar* currentCal() { return [NSCalendar currentCalendar]; }
     if (tz)
         [formatter setTimeZone:tz];
     
-    NSString * s = [formatter stringFromDate:self];    
-    KX_RELEASE(formatter);
-    return s;
+    return [formatter stringFromDate:self];
 }
 
 - (NSString *)formattedDatePattern:(NSString *) datePattern                              
@@ -449,7 +431,7 @@ static inline NSCalendar* currentCal() { return [NSCalendar currentCalendar]; }
     seconds = fabs(seconds);
     
     if (seconds < 10)
-        return locString(@"now");	
+        return NSLocalizedString(@"now", nil);
     
     if (seconds < 60)
         return [NSString stringWithFormat: inPast ? @"%ds" : @"+%ds", (int)seconds];
@@ -460,8 +442,9 @@ static inline NSCalendar* currentCal() { return [NSCalendar currentCalendar]; }
         return [NSString stringWithFormat: inPast ? @"%dm" : @"+%dm", minutes];
     
     if ([self isToday]) 
-        return KxUtils.format(locString(@"today %@"), [self formattedDatePattern:@"HH:mm" timeZone:nil]);
-    
+        return [NSString stringWithFormat:NSLocalizedString(@"today %@", nil),
+                [self formattedDatePattern:@"HH:mm" timeZone:nil]];
+                                                            
     int days = round(seconds/86400);
 
     if (days < 30)
@@ -477,19 +460,18 @@ static inline NSCalendar* currentCal() { return [NSCalendar currentCalendar]; }
     if (days > -2 && days < 2) {
     
         if ([self isToday])
-            return locString(@"today");
+            return NSLocalizedString(@"today", nil);
         
         if ([self isYesterday])
-            return locString(@"yesterday");
+            return NSLocalizedString(@"yesterday", nil);
         
         if ([self isTomorrow])
-            return locString(@"tomorrow");
+            return NSLocalizedString(@"tomorrow", nil);
         
         // BugCheck(@"Bugcheck, the data must be today, yesterday or tomorrow");
     }
     
-    NSDateFormatter * formatter;
-    formatter = KX_AUTORELEASE([[NSDateFormatter alloc] init]);
+    NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
     [formatter setDateStyle:NSDateFormatterShortStyle];
     [formatter setTimeStyle:NSDateFormatterNoStyle];        
     
@@ -516,7 +498,7 @@ static inline NSCalendar* currentCal() { return [NSCalendar currentCalendar]; }
     return [self formattedDatePattern:@"yyyy-MM-dd HH:mm:ss" timeZone:nil];
 }
 
-- (NSString *) longDateTimeFormatted 
+- (NSString *) longDateTimeFormatted
 {
     return [self longDateTimeFormatted:nil];
 }
@@ -529,21 +511,17 @@ static inline NSCalendar* currentCal() { return [NSCalendar currentCalendar]; }
 - (NSString *) RSSFormatted //:(NSLocale *)locale
 {
     NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
-    NSString * result = [self formattedDatePattern:@"EEE, d MMM yyyy HH:mm:ss ZZZ" 
+    return [self formattedDatePattern:@"EEE, d MMM yyyy HH:mm:ss ZZZ"
                                           timeZone:nil 
-                                            locale:locale];    
-    KX_RELEASE(locale);
-    return result;
+                                            locale:locale];
 }
 
 - (NSString *) AltRSSFormatted
 {
     NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];    
-    NSString * result = [self formattedDatePattern:@"d MMM yyyy HH:mm:ss ZZZ" 
+    return [self formattedDatePattern:@"d MMM yyyy HH:mm:ss ZZZ"
                                           timeZone:nil 
-                                            locale:locale];    
-    KX_RELEASE(locale);
-    return result;    
+                                            locale:locale];
 }
 
 @end

@@ -11,7 +11,7 @@
 #import <OCHamcrest/OCHamcrest.h>
 
 #import "NSData+Kolyvan.h"
-
+#import "NSData+ZLIB.h"
 
 SPEC_BEGIN(NSDataKolyvan)
 describe(@"NSData (Kolyvan)", ^{

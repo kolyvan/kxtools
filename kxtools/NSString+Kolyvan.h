@@ -1,6 +1,6 @@
 //
-//  ru.kolyvan.repo
-//  https://github.com/kolyvan
+//  ru.kolyvan.kxtools
+//  https://github.com/kolyvan/kxtools
 //  
 
 //  Copyright (C) 2012, Konstantin Boukreev (Kolyvan)
@@ -14,14 +14,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class KxTuple2;
-
 @interface NSString (Kolyvan)
-
-@property(nonatomic,readonly,getter=isEmpty) BOOL isEmpty;
-@property(nonatomic,readonly,getter=nonEmpty) BOOL nonEmpty;
-@property(nonatomic,readonly) unichar first;
-@property(nonatomic,readonly) unichar last;
 
 + (NSString *) uniqueString;
 + (NSString *) stringFromAsciiBytes: (NSData *) data;
@@ -37,33 +30,23 @@
 
 - (NSString *) md5;
 
-- (BOOL) isEmpty; 
-- (BOOL) nonEmpty;
 - (BOOL) contains:(NSString *)string; 
 - (BOOL) isEmail;
 - (BOOL) isLowercase;
 - (BOOL) isUppercase;
 
-- (NSString *) escapeHTML;
-- (NSString *) unescapeHTML;
-- (NSString *) stripHTML: (BOOL) addNewLine;
 - (NSString *) trimmed;
 - (NSString *) append:(NSString *)string;
 - (NSString *) prepend:(NSString *)string;
 
 - (NSArray *) split;
 - (NSArray *) split:(NSString *)string;
-- (KxTuple2*) splitAt:(NSInteger)position;
 - (NSArray *) lines;
 - (NSArray *) lines: (NSInteger) maxLen;
 
 - (NSString *) sliceFrom: (NSInteger) from until: (NSInteger) until;
 
-- (NSString *) base64encode;
-- (NSString *) base64decode;
-
 - (NSArray *) toArray;
-- (NSString *) toString;
 
 - (NSUInteger) integerValueFromHex;
 

@@ -1,7 +1,7 @@
 //
-//  ru.kolyvan.repo
-//  https://github.com/kolyvan
-//  
+//  ru.kolyvan.kxtools
+//  https://github.com/kolyvan/kxtools
+//
 
 //  Copyright (C) 2012, Konstantin Boukreev (Kolyvan)
 
@@ -20,12 +20,17 @@
 + (NSData *) dataFromBase64String:(NSString *)string;
 - (NSString *) base64EncodedString;
 
-- (NSData *) gzip;
-- (NSData *) gunzip; 
-
 - (NSData *) sha1;
 - (NSData *) md5;
 
 - (NSString *) toString;
+
+@end
+
+
+@interface NSString (BASE64)
+
+- (NSString *) base64encode;
+- (NSString *) base64decode;
 
 @end

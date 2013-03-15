@@ -1,7 +1,7 @@
 //
-//  ru.kolyvan.repo
-//  https://github.com/kolyvan
-//  
+//  ru.kolyvan.kxtools
+//  https://github.com/kolyvan/kxtools
+//
 
 //  Copyright (C) 2012, Konstantin Boukreev (Kolyvan)
 
@@ -36,9 +36,6 @@
 
 #import "KxUtils.h"
 #import "KxTuple2.h"
-#import "KxList.h"
-#import "KxMacros.h"
-#import "KxArc.h"
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #include <sys/xattr.h>
@@ -72,43 +69,111 @@ static NSString * completeErrorMessage (NSError * error)
     return message;
 }
 
-static NSFileManager * fileManager() 
+static BOOL fileExists(NSString *path)
 {
-    NSFileManager *fm = [[NSFileManager alloc] init];
-    return KX_AUTORELEASE(fm);
-}
-
-static BOOL fileExists(NSString *filepath)
-{    
+    NSCAssert(path.length, @"empty path");    
     NSFileManager *fm = [[NSFileManager alloc] init];    
-    BOOL exists = [fm fileExistsAtPath:filepath];    
-    KX_RELEASE(fm);
-    return exists;
+    return [fm fileExistsAtPath:path];
 }
 
-static NSError * ensureDirectory(NSString * path) 
+static BOOL ensureDirectory(NSString *path, NSError **perror)
 {
-    NSFileManager * fm = fileManager();    
-
+    NSCAssert(path.length, @"empty path");
+    
+    NSFileManager *fm = [[NSFileManager alloc] init];
     if ([fm fileExistsAtPath:path])
+        return YES;
+    
+    return [fm createDirectoryAtPath:path
+         withIntermediateDirectories:YES
+                          attributes:nil
+                               error:perror];
+}
+
+static BOOL saveObjectAsJson(id object, NSString *path, NSError **perror)
+{
+    NSCAssert(object, @"nil object");
+    NSCAssert(path.length, @"empty path");
+    
+    NSData *data = [NSJSONSerialization dataWithJSONObject:object
+                                                   options:NSJSONWritingPrettyPrinted
+                                                     error:perror];
+
+    if (!data || ![data writeToFile:path options:0 error:perror])
+        return NO;
+    return YES;
+}
+
+static id loadObjectFromJson(NSString *path, NSError **perror)
+{
+    NSCAssert(path.length, @"empty path");
+    
+    NSData *data = [NSData dataWithContentsOfFile:path options:0 error:perror];
+    if (!data)
         return nil;
     
-    NSError * KX_AUTORELEASING error = nil;
-    [fm createDirectoryAtPath:path
-  withIntermediateDirectories:YES 
-                   attributes:nil 
-                        error:&error];        
-
-#ifdef DEBUG    
-    if (error)
-        NSLog(@"failed in %s - %@", __PRETTY_FUNCTION__, completeErrorMessage(error));
-#endif    
-    return error;
+    if (!data.length)
+        return [NSNull null];
     
+    return [NSJSONSerialization JSONObjectWithData:data options:0 error:perror];
 }
 
+static void enumerateItemsAtPath(NSString *path,
+                                 BOOL subDirs,
+                                 KxUtilsEnumerateItemsBlock block)
+{
+    NSCAssert(path.length, @"empty path");
+    NSCAssert(block, @"nil block");
+    
+    NSFileManager *fm = [[NSFileManager alloc] init];
+    NSArray *contents = [fm contentsOfDirectoryAtPath:path error:nil];
+        
+    for (NSString *filename in contents) {
+        
+        if (filename.length && [filename characterAtIndex:0] != '.') {
+            
+            NSString *fullpath = [path stringByAppendingPathComponent:filename];
+            NSDictionary *attr = [fm attributesOfItemAtPath:fullpath error:nil];
+            
+            id fileType = [attr fileType];
+            
+            if ([fileType isEqual: NSFileTypeRegular]) {
+                
+                block(fm, fullpath, attr);
+                
+            } else if (subDirs && [fileType isEqual: NSFileTypeDirectory]) {
+                
+               enumerateItemsAtPath(fullpath, subDirs, block);
+            }
+        }
+    }
+}
+
+static NSArray *filesAsPath(NSString *path)
+{
+    NSCAssert(path.length, @"empty path");
+    
+    NSFileManager *fm = [[NSFileManager alloc] init];
+    NSArray *contents = [fm contentsOfDirectoryAtPath:path error:nil];        
+    NSMutableArray *ma = [NSMutableArray array];
+    
+    for (NSString *filename in contents) {
+        
+        if (filename.length && [filename characterAtIndex:0] != '.') {
+            
+            NSString *fullpath = [path stringByAppendingPathComponent:filename];
+            NSDictionary *attr = [fm attributesOfItemAtPath:fullpath error:nil];
+            if ([attr.fileType isEqual: NSFileTypeRegular])
+                [ma addObject:filename];
+        }
+    }
+    
+    return ma;
+}
+
+
 #ifndef __IPHONE_OS_VERSION_MAX_ALLOWED
-static NSString * appBundleID() 
+static NSString * appBundleID()
 {    
    // return [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleIdentifierKey];
     NSString * identifier = [[NSBundle mainBundle] bundleIdentifier];
@@ -124,12 +189,10 @@ static NSString * appPath()
     return [[NSBundle mainBundle] bundlePath];
 }
 
-
 static NSString * resourcePath()
 {
     return [[NSBundle mainBundle] resourcePath];
 }
-
 
 static NSString * desktopPath() 
 {
@@ -137,7 +200,6 @@ static NSString * desktopPath()
                                                 NSUserDomainMask, 
                                                 YES) objectAtIndex:0];
 }
-
 
 static NSString * publicDataPath() 
 {
@@ -159,11 +221,9 @@ static NSString * privateDataPath()
             
 #endif
 
-    ensureDirectory(path);
+    ensureDirectory(path, nil);
     return path;    
 }
-
-
 
 static NSString * cacheDataPath() 
 {
@@ -177,14 +237,14 @@ static NSString * cacheDataPath()
             
 #endif
     
-    ensureDirectory(path);
+    ensureDirectory(path, nil);
     return path;    
 }
 
 static NSString * offlineDataPath()
 {
     NSString *path = [privateDataPath() stringByAppendingPathComponent:@"Offline Data"];
-    ensureDirectory(path);
+    ensureDirectory(path, nil);
         
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #ifdef __IPHONE_5_1
@@ -252,10 +312,7 @@ static NSString * pathForResource(NSString * file)
     return [resourcePath() stringByAppendingPathComponent:file];
 }
 
-
-
 ///// 
-
 
 static void waitRunLoop (NSTimeInterval secondsToWait, NSTimeInterval interval, BOOL (^condition)(void)) {
     
@@ -276,74 +333,15 @@ static void waitRunLoop (NSTimeInterval secondsToWait, NSTimeInterval interval, 
 
 ////
 
-static NSArray * array (id first, ...)
-{
-    va_list args;    
-    va_start(args, first);
-    
-    NSMutableArray* result = [NSMutableArray array];  
-    for (id p = first; p != nil; p = va_arg(args, id))
-        [result addObject:p];
-    va_end(args);
-
-    return [NSArray arrayWithArray:result];
-}
-
-static NSDictionary* dictionary(id firstObj, ...) 
-{    
-    va_list args;    
-    va_start(args, firstObj);
-    
-    NSMutableArray* current = [NSMutableArray array];
-    NSMutableArray* next = [NSMutableArray array];        
-    
-    for (id p = firstObj; p != nil; p = va_arg(args, id)) {
-        [current addObject:p];
-        // swap
-        NSMutableArray *t = current;
-        current = next;
-        next = t;
-    }
-    va_end(args);
-
-    return [NSDictionary dictionaryWithObjects:current forKeys:next];
-};
-
-
-static NSString * format (NSString * fmt, ...) 
-{
-    va_list args;    
-    va_start(args, fmt);
-    NSString * s = [[NSString alloc] initWithFormat:fmt arguments:args];
-    va_end(args);
-    return KX_AUTORELEASE(s);
-};
-
-static KxTuple2 * tuple(id first, id second)
-{
-    return [KxTuple2 first: first second: second];
-}
-
-static KxList* list(id head, ...)
-{
-    va_list args;    
-    va_start(args, head);    
-    
-    NSMutableArray * b = [NSMutableArray array];
-    for (id p = head; p != nil; p = va_arg(args, id)) {    
-        [b addObject:p];
-    }
-    va_end(args);
-    
-    return [KxList fromArray:b];
-}
-
-////
-
 KxUtils_t KxUtils = {
-    fileManager,
+
     fileExists,
-    ensureDirectory,    
+    ensureDirectory,
+    saveObjectAsJson,
+    loadObjectFromJson,
+    enumerateItemsAtPath,
+    filesAsPath,
+    
 #ifndef __IPHONE_OS_VERSION_MAX_ALLOWED
     appBundleID,
 #endif    
@@ -370,11 +368,5 @@ KxUtils_t KxUtils = {
     errorMessage,
     completeErrorMessage,
     
-    //
-    array,
-    dictionary,
-    format,     
-    tuple,
-    list,
 };
 

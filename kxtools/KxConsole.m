@@ -1,7 +1,7 @@
 //
-//  ru.kolyvan.repo
-//  https://github.com/kolyvan
-//  
+//  ru.kolyvan.kxtools
+//  https://github.com/kolyvan/kxtools
+//
 
 //  Copyright (C) 2012, Konstantin Boukreev (Kolyvan)
 
@@ -14,69 +14,54 @@
 
 
 #import "KxConsole.h"
-#import "KxArc.h"
 #import <sys/uio.h>
 
-#if ! __has_feature(objc_arc)
-
-static NSString * ansiCode_right(int n)      { return [NSString stringWithFormat: @"\e[%dC", n, nil]; }
-static NSString * ansiCode_left(int n)       { return [NSString stringWithFormat: @"\e[%dD", n, nil]; }       
-static NSString * ansiCode_up(int n)         { return [NSString stringWithFormat: @"\e[%dA", n, nil]; }                                
-static NSString * ansiCode_down(int n)       { return [NSString stringWithFormat: @"\e[%dB", n, nil]; }                                    
-static NSString * ansiCode_move(int x, int y){ return [NSString stringWithFormat: @"\e[%d;%dH", x, y, nil]; } 
- 
+#if __has_feature(objc_arc)
+#warning This file must be compiled without ARC. Use -fno-objc-arc flag.
+#endif
 
 KxAnsiCodes_t KxAnsiCodes = {
-    @"\e[0m",   //reset
-    @"\e[1m",   //bold
-    @"\e[2m",   //dark
-    @"\e[3m",   //italic
-    @"\e[4m",   //underline
-    @"\e[5m",   //blink
-    @"\e[7m",   //negative
-    @"\e[8m",   //concealed
-    @"\e[9m",   //strikethrough 
+    "\e[0m",   //reset
+    "\e[1m",   //bold
+    "\e[2m",   //dark
+    "\e[3m",   //italic
+    "\e[4m",   //underline
+    "\e[5m",   //blink
+    "\e[7m",   //negative
+    "\e[8m",   //concealed
+    "\e[9m",   //strikethrough
     
-    @"\e[22m",  //boldOff       
-    @"\e[23m",  //italicOff       
-    @"\e[24m",  //underlineOff      
-    @"\e[27m",  //negativeOff      
-    @"\e[29m",  //strikethroughOff          
+    "\e[22m",  //boldOff
+    "\e[23m",  //italicOff
+    "\e[24m",  //underlineOff
+    "\e[27m",  //negativeOff
+    "\e[29m",  //strikethroughOff
     
-    @"\e[30m",
-    @"\e[31m",    
-    @"\e[32m",
-    @"\e[33m",
-    @"\e[34m",
-    @"\e[35m",
-    @"\e[36m",
-    @"\e[37m",
-    @"\e[39m",    
+    "\e[30m",
+    "\e[31m",
+    "\e[32m",
+    "\e[33m",
+    "\e[34m",
+    "\e[35m",
+    "\e[36m",
+    "\e[37m",
+    "\e[39m",
     
-    @"\e[40m",    
-    @"\e[41m",
-    @"\e[42m",
-    @"\e[43m",
-    @"\e[44m",
-    @"\e[45m",
-    @"\e[46m",
-    @"\e[47m",    
-    @"\e[49m",    
+    "\e[40m",
+    "\e[41m",
+    "\e[42m",
+    "\e[43m",
+    "\e[44m",
+    "\e[45m",
+    "\e[46m",
+    "\e[47m",
+    "\e[49m",
     
-    @"\e[s",    
-    @"\e[u",        
-    @"\e[K",        
-    @"\e[2J",        
-    
-    ansiCode_right,
-    ansiCode_left,
-    ansiCode_up,
-    ansiCode_down,
-    ansiCode_move,    
-    
+    "\e[s",
+    "\e[u",
+    "\e[K",
+    "\e[2J",
 };
-
-#endif
 
 //////
 
@@ -107,7 +92,7 @@ static void c_println (const char * msg) {
     writev(STDOUT_FILENO, v, 2);    
 }
 
-static void ns_print (NSString * s) {    
+static void ns_print (NSString * s) {
     c_print([s UTF8String]);
 }
 
@@ -118,7 +103,7 @@ static void ns_printf (NSString * fmt, ...) {
     NSString * s =[[NSString alloc] initWithFormat:fmt arguments:args];
     c_print([s UTF8String]);
     va_end(args);
-    KX_RELEASE(s);    
+    [s release];
 }
 
 
@@ -133,7 +118,7 @@ static void ns_printlnf (NSString * fmt, ...) {
     NSString * s =[[NSString alloc] initWithFormat:fmt arguments:args];
     c_println([s UTF8String]);
     va_end(args);
-    KX_RELEASE(s);    
+    [s release];  
 }
 
 

@@ -28,9 +28,14 @@ describe(@"KxTuple2", ^{
     it(@"create", ^{
         
         assertThat(tuple.first, equalTo(@"11"));
-        assertThat(tuple.second, equalTo(@"22"));        
-        assertThat(KxUtils.tuple(@"11", @"22"), equalTo(tuple));
-    });  
+        assertThat(tuple.second, equalTo(@"22"));                
+    });
+    
+    it(@"swap", ^{
+        
+        assertThat([tuple swap].first, equalTo(@"22"));
+        assertThat([tuple swap].second, equalTo(@"11"));
+    });
     
     it(@"equal, hash", ^{
         
@@ -38,7 +43,14 @@ describe(@"KxTuple2", ^{
         assertThat([tuple swap], isNot(equalTo(tuple)));
         
         assertThatInteger([[tuple copy] hash], equalToInteger([tuple hash]));  
-        assertThatInteger([[tuple swap] hash], isNot(equalToInteger([tuple hash])));        
+        assertThatInteger([[tuple swap] hash], isNot(equalToInteger([tuple hash])));
+        
+        assertThatBool([tuple isEqualTo: nil], equalToBool(NO));
+        assertThatBool([tuple isEqualTo: @"11"], equalToBool(NO));
+        assertThatBool([tuple isEqualTo: [tuple swap]], equalToBool(NO));        
+        assertThatBool([tuple isEqualTo: tuple], equalToBool(YES));
+        assertThatBool([tuple isEqualTo: [tuple copy]], equalToBool(YES));
+        assertThatBool([tuple isEqualTo: [KxTuple2 first:@"11" second:@"22"]], equalToBool(YES));
     });  
     
     it(@"nscoding", ^{
@@ -52,6 +64,14 @@ describe(@"KxTuple2", ^{
         assertThat(t, equalTo(tuple));
         
     });
+    
+    it(@"to", ^{
+        
+        assertThat(tuple.toArray, equalTo(@[@"11", @"22"]));
+        assertThat(tuple.toDictionary, equalTo(@{@"11" : @"22"}));
+        
+    });
+
     
 });
 SPEC_END

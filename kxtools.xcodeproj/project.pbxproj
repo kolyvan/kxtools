@@ -10,23 +10,25 @@
 		8717F8ED1601EF4900C28FC3 /* KxBitArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 8717F8EC1601EF4900C28FC3 /* KxBitArray.m */; };
 		8717F8EE1601EF4900C28FC3 /* KxBitArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 8717F8EC1601EF4900C28FC3 /* KxBitArray.m */; };
 		8717F8F216020E1E00C28FC3 /* KxBitArraySpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 8717F8F116020E1E00C28FC3 /* KxBitArraySpec.m */; };
+		876B256C16F307D60041DCE6 /* NSData+ZLIB.m in Sources */ = {isa = PBXBuildFile; fileRef = 876B256B16F307D50041DCE6 /* NSData+ZLIB.m */; };
+		876B256D16F308300041DCE6 /* NSData+ZLIB.m in Sources */ = {isa = PBXBuildFile; fileRef = 876B256B16F307D50041DCE6 /* NSData+ZLIB.m */; };
+		876B257016F31A2D0041DCE6 /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 876B256F16F31A2D0041DCE6 /* NSString+HTML.m */; };
+		876B257116F31A2D0041DCE6 /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 876B256F16F31A2D0041DCE6 /* NSString+HTML.m */; };
+		876B259716F31FE80041DCE6 /* KxConsole.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BD446C15580F7B0004853F /* KxConsole.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		87BD445515580EC70004853F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87BD445415580EC70004853F /* Foundation.framework */; };
 		87BD448215580F7B0004853F /* KxCast.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BD446A15580F7B0004853F /* KxCast.m */; };
 		87BD448315580F7B0004853F /* KxConsole.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BD446C15580F7B0004853F /* KxConsole.m */; };
-		87BD448415580F7B0004853F /* KxList.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BD446E15580F7B0004853F /* KxList.m */; };
 		87BD448515580F7B0004853F /* KxTuple2.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BD447115580F7B0004853F /* KxTuple2.m */; };
 		87BD448615580F7B0004853F /* KxUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BD447315580F7B0004853F /* KxUtils.m */; };
 		87BD448715580F7B0004853F /* NSArray+Kolyvan.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BD447515580F7B0004853F /* NSArray+Kolyvan.m */; };
 		87BD448815580F7B0004853F /* NSData+Kolyvan.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BD447715580F7B0004853F /* NSData+Kolyvan.m */; };
 		87BD448915580F7B0004853F /* NSDate+Kolyvan.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BD447915580F7B0004853F /* NSDate+Kolyvan.m */; };
 		87BD448A15580F7B0004853F /* NSDictionary+Kolyvan.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BD447B15580F7B0004853F /* NSDictionary+Kolyvan.m */; };
-		87BD448C15580F7B0004853F /* NSObject+Kolyvan.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BD447F15580F7B0004853F /* NSObject+Kolyvan.m */; };
 		87BD448D15580F7B0004853F /* NSString+Kolyvan.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BD448115580F7B0004853F /* NSString+Kolyvan.m */; };
 		87BD449415580FB40004853F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87BD445415580EC70004853F /* Foundation.framework */; };
 		87BD449715580FB40004853F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BD449615580FB40004853F /* main.m */; };
 		87BD44A4155810160004853F /* Cedar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87BD446315580F3E0004853F /* Cedar.framework */; };
 		87BD44A51558101A0004853F /* OCHamcrest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87BD446415580F3E0004853F /* OCHamcrest.framework */; };
-		87BD44AD155810320004853F /* KxListSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BD44A6155810320004853F /* KxListSpec.m */; };
 		87BD44AE155810320004853F /* NSArraySpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BD44A7155810320004853F /* NSArraySpec.m */; };
 		87BD44AF155810320004853F /* NSDataSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BD44A8155810320004853F /* NSDataSpec.m */; };
 		87BD44B0155810320004853F /* NSDateSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BD44A9155810320004853F /* NSDateSpec.m */; };
@@ -34,14 +36,12 @@
 		87BD44B2155810320004853F /* NSStringSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BD44AB155810320004853F /* NSStringSpec.m */; };
 		87BD44B3155810320004853F /* Tuple2Spec.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BD44AC155810320004853F /* Tuple2Spec.m */; };
 		87BD44B41558104A0004853F /* KxCast.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BD446A15580F7B0004853F /* KxCast.m */; };
-		87BD44B5155810510004853F /* KxList.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BD446E15580F7B0004853F /* KxList.m */; };
 		87BD44B6155810550004853F /* KxTuple2.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BD447115580F7B0004853F /* KxTuple2.m */; };
 		87BD44B7155810580004853F /* KxUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BD447315580F7B0004853F /* KxUtils.m */; };
 		87BD44B81558105B0004853F /* NSArray+Kolyvan.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BD447515580F7B0004853F /* NSArray+Kolyvan.m */; };
 		87BD44B9155810600004853F /* NSData+Kolyvan.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BD447715580F7B0004853F /* NSData+Kolyvan.m */; };
 		87BD44BA155810670004853F /* NSDate+Kolyvan.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BD447915580F7B0004853F /* NSDate+Kolyvan.m */; };
 		87BD44BB1558106E0004853F /* NSDictionary+Kolyvan.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BD447B15580F7B0004853F /* NSDictionary+Kolyvan.m */; };
-		87BD44BD155810750004853F /* NSObject+Kolyvan.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BD447F15580F7B0004853F /* NSObject+Kolyvan.m */; };
 		87BD44BE155810780004853F /* NSString+Kolyvan.m in Sources */ = {isa = PBXBuildFile; fileRef = 87BD448115580F7B0004853F /* NSString+Kolyvan.m */; };
 		87BD44BF155811470004853F /* Cedar.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 87BD446315580F3E0004853F /* Cedar.framework */; };
 		87BD44C0155811490004853F /* OCHamcrest.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 87BD446415580F3E0004853F /* OCHamcrest.framework */; };
@@ -75,7 +75,10 @@
 		8717F8EB1601EF4900C28FC3 /* KxBitArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KxBitArray.h; sourceTree = "<group>"; };
 		8717F8EC1601EF4900C28FC3 /* KxBitArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KxBitArray.m; sourceTree = "<group>"; };
 		8717F8F116020E1E00C28FC3 /* KxBitArraySpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KxBitArraySpec.m; sourceTree = "<group>"; };
-		8771A6691558E782001BB718 /* KxArc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KxArc.h; sourceTree = "<group>"; };
+		876B256A16F307D50041DCE6 /* NSData+ZLIB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+ZLIB.h"; sourceTree = "<group>"; };
+		876B256B16F307D50041DCE6 /* NSData+ZLIB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+ZLIB.m"; sourceTree = "<group>"; };
+		876B256E16F31A2C0041DCE6 /* NSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HTML.h"; sourceTree = "<group>"; };
+		876B256F16F31A2D0041DCE6 /* NSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HTML.m"; sourceTree = "<group>"; };
 		87BD445015580EC70004853F /* kxtools */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = kxtools; sourceTree = BUILT_PRODUCTS_DIR; };
 		87BD445415580EC70004853F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		87BD446315580F3E0004853F /* Cedar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cedar.framework; path = Frameworks/Cedar.framework; sourceTree = "<group>"; };
@@ -84,9 +87,6 @@
 		87BD446A15580F7B0004853F /* KxCast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KxCast.m; sourceTree = "<group>"; };
 		87BD446B15580F7B0004853F /* KxConsole.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KxConsole.h; sourceTree = "<group>"; };
 		87BD446C15580F7B0004853F /* KxConsole.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KxConsole.m; sourceTree = "<group>"; };
-		87BD446D15580F7B0004853F /* KxList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KxList.h; sourceTree = "<group>"; };
-		87BD446E15580F7B0004853F /* KxList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KxList.m; sourceTree = "<group>"; };
-		87BD446F15580F7B0004853F /* KxMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KxMacros.h; sourceTree = "<group>"; };
 		87BD447015580F7B0004853F /* KxTuple2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KxTuple2.h; sourceTree = "<group>"; };
 		87BD447115580F7B0004853F /* KxTuple2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KxTuple2.m; sourceTree = "<group>"; };
 		87BD447215580F7B0004853F /* KxUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KxUtils.h; sourceTree = "<group>"; };
@@ -99,15 +99,12 @@
 		87BD447915580F7B0004853F /* NSDate+Kolyvan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Kolyvan.m"; sourceTree = "<group>"; };
 		87BD447A15580F7B0004853F /* NSDictionary+Kolyvan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Kolyvan.h"; sourceTree = "<group>"; };
 		87BD447B15580F7B0004853F /* NSDictionary+Kolyvan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Kolyvan.m"; sourceTree = "<group>"; };
-		87BD447E15580F7B0004853F /* NSObject+Kolyvan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Kolyvan.h"; sourceTree = "<group>"; };
-		87BD447F15580F7B0004853F /* NSObject+Kolyvan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Kolyvan.m"; sourceTree = "<group>"; };
 		87BD448015580F7B0004853F /* NSString+Kolyvan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Kolyvan.h"; sourceTree = "<group>"; };
 		87BD448115580F7B0004853F /* NSString+Kolyvan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Kolyvan.m"; sourceTree = "<group>"; };
 		87BD449215580FB40004853F /* specs */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = specs; sourceTree = BUILT_PRODUCTS_DIR; };
 		87BD449615580FB40004853F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		87BD449915580FB40004853F /* specs-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "specs-Prefix.pch"; sourceTree = "<group>"; };
 		87BD449A15580FB50004853F /* specs.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = specs.1; sourceTree = "<group>"; };
-		87BD44A6155810320004853F /* KxListSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KxListSpec.m; sourceTree = "<group>"; };
 		87BD44A7155810320004853F /* NSArraySpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSArraySpec.m; sourceTree = "<group>"; };
 		87BD44A8155810320004853F /* NSDataSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDataSpec.m; sourceTree = "<group>"; };
 		87BD44A9155810320004853F /* NSDateSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDateSpec.m; sourceTree = "<group>"; };
@@ -143,7 +140,6 @@
 		87BD444515580EC70004853F = {
 			isa = PBXGroup;
 			children = (
-				87CFB20615A9ABBD008CCD1D /* libz.dylib */,
 				87BD445615580EC70004853F /* kxtools */,
 				87BD449515580FB40004853F /* specs */,
 				87BD445315580EC70004853F /* Frameworks */,
@@ -177,28 +173,26 @@
 				87BD446A15580F7B0004853F /* KxCast.m */,
 				87BD446B15580F7B0004853F /* KxConsole.h */,
 				87BD446C15580F7B0004853F /* KxConsole.m */,
-				87BD446D15580F7B0004853F /* KxList.h */,
-				87BD446E15580F7B0004853F /* KxList.m */,
 				8717F8EB1601EF4900C28FC3 /* KxBitArray.h */,
 				8717F8EC1601EF4900C28FC3 /* KxBitArray.m */,
-				87BD446F15580F7B0004853F /* KxMacros.h */,
-				8771A6691558E782001BB718 /* KxArc.h */,
 				87BD447015580F7B0004853F /* KxTuple2.h */,
 				87BD447115580F7B0004853F /* KxTuple2.m */,
-				87BD447215580F7B0004853F /* KxUtils.h */,
-				87BD447315580F7B0004853F /* KxUtils.m */,
 				87BD447415580F7B0004853F /* NSArray+Kolyvan.h */,
 				87BD447515580F7B0004853F /* NSArray+Kolyvan.m */,
 				87BD447615580F7B0004853F /* NSData+Kolyvan.h */,
 				87BD447715580F7B0004853F /* NSData+Kolyvan.m */,
+				876B256A16F307D50041DCE6 /* NSData+ZLIB.h */,
+				876B256B16F307D50041DCE6 /* NSData+ZLIB.m */,
 				87BD447815580F7B0004853F /* NSDate+Kolyvan.h */,
 				87BD447915580F7B0004853F /* NSDate+Kolyvan.m */,
 				87BD447A15580F7B0004853F /* NSDictionary+Kolyvan.h */,
 				87BD447B15580F7B0004853F /* NSDictionary+Kolyvan.m */,
-				87BD447E15580F7B0004853F /* NSObject+Kolyvan.h */,
-				87BD447F15580F7B0004853F /* NSObject+Kolyvan.m */,
 				87BD448015580F7B0004853F /* NSString+Kolyvan.h */,
 				87BD448115580F7B0004853F /* NSString+Kolyvan.m */,
+				876B256E16F31A2C0041DCE6 /* NSString+HTML.h */,
+				876B256F16F31A2D0041DCE6 /* NSString+HTML.m */,
+				87BD447215580F7B0004853F /* KxUtils.h */,
+				87BD447315580F7B0004853F /* KxUtils.m */,
 				87BD445915580EC70004853F /* Supporting Files */,
 			);
 			path = kxtools;
@@ -214,7 +208,7 @@
 		87BD449515580FB40004853F /* specs */ = {
 			isa = PBXGroup;
 			children = (
-				87BD44A6155810320004853F /* KxListSpec.m */,
+				87CFB20615A9ABBD008CCD1D /* libz.dylib */,
 				8717F8F116020E1E00C28FC3 /* KxBitArraySpec.m */,
 				87BD44A7155810320004853F /* NSArraySpec.m */,
 				87BD44A8155810320004853F /* NSDataSpec.m */,
@@ -307,16 +301,16 @@
 			files = (
 				87BD448215580F7B0004853F /* KxCast.m in Sources */,
 				87BD448315580F7B0004853F /* KxConsole.m in Sources */,
-				87BD448415580F7B0004853F /* KxList.m in Sources */,
 				87BD448515580F7B0004853F /* KxTuple2.m in Sources */,
 				87BD448615580F7B0004853F /* KxUtils.m in Sources */,
 				87BD448715580F7B0004853F /* NSArray+Kolyvan.m in Sources */,
 				87BD448815580F7B0004853F /* NSData+Kolyvan.m in Sources */,
 				87BD448915580F7B0004853F /* NSDate+Kolyvan.m in Sources */,
 				87BD448A15580F7B0004853F /* NSDictionary+Kolyvan.m in Sources */,
-				87BD448C15580F7B0004853F /* NSObject+Kolyvan.m in Sources */,
 				87BD448D15580F7B0004853F /* NSString+Kolyvan.m in Sources */,
 				8717F8ED1601EF4900C28FC3 /* KxBitArray.m in Sources */,
+				876B256C16F307D60041DCE6 /* NSData+ZLIB.m in Sources */,
+				876B257016F31A2D0041DCE6 /* NSString+HTML.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -325,7 +319,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				87BD449715580FB40004853F /* main.m in Sources */,
-				87BD44AD155810320004853F /* KxListSpec.m in Sources */,
 				87BD44AE155810320004853F /* NSArraySpec.m in Sources */,
 				87BD44AF155810320004853F /* NSDataSpec.m in Sources */,
 				87BD44B0155810320004853F /* NSDateSpec.m in Sources */,
@@ -333,17 +326,18 @@
 				87BD44B2155810320004853F /* NSStringSpec.m in Sources */,
 				87BD44B3155810320004853F /* Tuple2Spec.m in Sources */,
 				87BD44B41558104A0004853F /* KxCast.m in Sources */,
-				87BD44B5155810510004853F /* KxList.m in Sources */,
 				87BD44B6155810550004853F /* KxTuple2.m in Sources */,
 				87BD44B7155810580004853F /* KxUtils.m in Sources */,
 				87BD44B81558105B0004853F /* NSArray+Kolyvan.m in Sources */,
 				87BD44B9155810600004853F /* NSData+Kolyvan.m in Sources */,
 				87BD44BA155810670004853F /* NSDate+Kolyvan.m in Sources */,
 				87BD44BB1558106E0004853F /* NSDictionary+Kolyvan.m in Sources */,
-				87BD44BD155810750004853F /* NSObject+Kolyvan.m in Sources */,
 				87BD44BE155810780004853F /* NSString+Kolyvan.m in Sources */,
 				8717F8EE1601EF4900C28FC3 /* KxBitArray.m in Sources */,
 				8717F8F216020E1E00C28FC3 /* KxBitArraySpec.m in Sources */,
+				876B256D16F308300041DCE6 /* NSData+ZLIB.m in Sources */,
+				876B257116F31A2D0041DCE6 /* NSString+HTML.m in Sources */,
+				876B259716F31FE80041DCE6 /* KxConsole.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

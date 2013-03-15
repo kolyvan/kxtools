@@ -1,7 +1,7 @@
 //
-//  ru.kolyvan.repo
-//  https://github.com/kolyvan
-//  
+//  ru.kolyvan.kxtools
+//  https://github.com/kolyvan/kxtools
+//
 
 //  Copyright (C) 2012, Konstantin Boukreev (Kolyvan)
 
@@ -14,14 +14,7 @@
 
 #import <Foundation/Foundation.h>
 
-
 @interface NSDictionary (Kolyvan)
-
-@property(nonatomic,readonly,getter=isEmpty) BOOL isEmpty;
-@property(nonatomic,readonly,getter=nonEmpty) BOOL nonEmpty;
-
-- (BOOL) isEmpty; 
-- (BOOL) nonEmpty;
 
 - (BOOL) contains:(id)key; 
 
@@ -31,13 +24,13 @@
 - (void) each: (void (^)(id key, id obj)) block;
 - (NSDictionary *) map: (id (^)(id key, id elem)) block;
 
-//- (NSDictionary *) flatMap: (id (^)(id key, id elem)) block;
-//- (NSDictionary *) filter: (BOOL(^)(id key, id elem)) block;
-//- (NSDictionary *) filterNot: (BOOL(^)(id key, id elem)) block;
-//- (id) fold:(id) start with:(id (^)(id acc, id key, id elem)) block;
-
-- (NSArray *) toArray;
-
+- (id) valueForKey: (NSString *) key ofClass: (Class) klazz;
+- (NSData *) dataForKey: (NSString *) key;
+- (NSString *) stringForKey: (NSString *) key;
+- (NSNumber *) numberForKey: (NSString *) key;
+- (NSDate *) dateForKey: (NSString *) key;
+- (NSArray *) arrayForKey: (NSString *) key;
+- (NSDictionary *) dictionaryForKey: (NSString *) key;
 
 @end
 
