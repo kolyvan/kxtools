@@ -19,6 +19,11 @@
 
 - (NSData *) gzip
 {
+    return [self gzipAsZlib: YES];
+}
+
+- (NSData *) gzipAsZlib: (BOOL) asZLib
+{
     if (self.length == 0)
         return self;
     
@@ -34,7 +39,13 @@
     
     NSMutableData *deflated = [NSMutableData dataWithLength:16384];
     
-    if (Z_OK != deflateInit2(&zs, Z_DEFAULT_COMPRESSION, Z_DEFLATED, MAX_WBITS, 8, Z_DEFAULT_STRATEGY))
+    
+    if (Z_OK != deflateInit2(&zs,
+                             Z_DEFAULT_COMPRESSION,
+                             Z_DEFLATED,
+                             MAX_WBITS+(asZLib ? 0 : 16),
+                             8,
+                             Z_DEFAULT_STRATEGY))
         return nil;
     
     do {
@@ -73,7 +84,7 @@
     zs.zfree = Z_NULL;
     zs.opaque = Z_NULL;
     
-    if (Z_OK != inflateInit2(&zs, MAX_WBITS))
+    if (Z_OK != inflateInit2(&zs, MAX_WBITS+32))
         return nil;
     
     int status = Z_OK;

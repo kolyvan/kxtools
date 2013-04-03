@@ -15,6 +15,7 @@
 #import <Foundation/Foundation.h>
 
 @interface NSData (ZLIB)
+- (NSData *) gzipAsZlib: (BOOL) asZLib;
 - (NSData *) gzip;
 - (NSData *) gunzip;
 @end

@@ -31,8 +31,14 @@ describe(@"NSData (Kolyvan)", ^{
     it(@"gzip", ^{
        
         NSString *s = @"The quick brown fox jumps over the lazy dog";
-        NSData *data = [s dataUsingEncoding:NSUTF8StringEncoding];        
+        NSData *data = [s dataUsingEncoding:NSUTF8StringEncoding];
+        
         assertThat(s, equalTo([NSString stringWithUTF8String:data.gzip.gunzip.bytes]));
+        assertThat(s, equalTo([NSString stringWithUTF8String:[data gzipAsZlib:YES].gunzip.bytes]));
+        assertThat(s, equalTo([NSString stringWithUTF8String:[data gzipAsZlib:NO].gunzip.bytes]));
+        assertThat([data gzipAsZlib:YES], equalTo([data gzip]));
+        
+        assertThatBool(NO, equalToBool([[data gzipAsZlib:NO] isEqualToData:[data gzipAsZlib:YES]]));
     });
     
     it(@"sha", ^{
