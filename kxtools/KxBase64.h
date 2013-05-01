@@ -3,7 +3,7 @@
 //  https://github.com/kolyvan/kxtools
 //
 
-//  Copyright (C) 2012, Konstantin Boukreev (Kolyvan)
+//  Copyright (C) 2012-2013, Konstantin Boukreev (Kolyvan)
 
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
@@ -14,8 +14,20 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSData (Kolyvan)
-- (NSData *) sha1;
-- (NSData *) md5;
-- (NSString *) toString;
+@interface NSData (BASE64)
+
++ (NSData *) dataFromBase64String:(NSString *)string;
+- (NSString *) base64EncodedString;
+
+- (NSData *) base64encode;
+- (NSData *) base64decode;
+
+@end
+
+
+@interface NSString (BASE64)
+
+- (NSString *) base64encode;
+- (NSString *) base64decode;
+
 @end

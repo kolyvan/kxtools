@@ -12,22 +12,14 @@
 
 #import "NSData+Kolyvan.h"
 #import "NSData+ZLIB.h"
+#import "KxBase64.h"
 
 SPEC_BEGIN(NSDataKolyvan)
 describe(@"NSData (Kolyvan)", ^{
     beforeEach(^{
         
     });
-    
-    it(@"base64", ^{
         
-        char bytes[] = {0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8};
-        NSData *d = [NSData dataWithBytes: bytes length:sizeof(bytes)];
-        NSString *s = [d base64EncodedString];
-        
-        assertThat([NSData dataFromBase64String:s], equalTo(d));
-    });
-    
     it(@"gzip", ^{
        
         NSString *s = @"The quick brown fox jumps over the lazy dog";

@@ -125,25 +125,6 @@ describe(@"NSString (Kolyvan)", ^{
         assertThat([@"0123456789" sliceFrom: 1 until: 3], equalTo(@"12"));
         assertThat([@"0123456789" sliceFrom: -1 until: 10], equalTo(@"0123456789"));        
     });
-    
-    it(@"base64 encode", ^{
-        NSString * string =  @"The quick brown fox jumps over the lazy dog"; 
-        NSString * encoded = @"VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wcyBvdmVyIHRoZSBsYXp5IGRvZw==";
-        
-        assertThat([string base64encode], equalTo(encoded));
-        assertThat([@" " base64encode], equalTo(@"IA=="));
-        assertThat([@"" base64encode], equalTo(@""));
-        
-    });
-    
-    it(@"base64 decode", ^{
-        NSString * string =  @"The quick brown fox jumps over the lazy dog"; 
-        NSString * encoded = @"VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wcyBvdmVyIHRoZSBsYXp5IGRvZw==";
-        
-        assertThat([encoded base64decode], equalTo(string));        
-        assertThat([@"IA==" base64decode], equalTo(@" "));
-        assertThat([@"" base64decode], equalTo(@""));
-    });
         
     it(@"toArray", ^{
 

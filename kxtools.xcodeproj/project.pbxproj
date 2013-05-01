@@ -10,6 +10,9 @@
 		8717F8ED1601EF4900C28FC3 /* KxBitArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 8717F8EC1601EF4900C28FC3 /* KxBitArray.m */; };
 		8717F8EE1601EF4900C28FC3 /* KxBitArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 8717F8EC1601EF4900C28FC3 /* KxBitArray.m */; };
 		8717F8F216020E1E00C28FC3 /* KxBitArraySpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 8717F8F116020E1E00C28FC3 /* KxBitArraySpec.m */; };
+		871CB5391730E0E80035E5A6 /* KxBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 871CB5381730E0E80035E5A6 /* KxBase64.m */; };
+		871CB53A1730E0F10035E5A6 /* KxBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 871CB5381730E0E80035E5A6 /* KxBase64.m */; };
+		871CB53C1730E1EA0035E5A6 /* Base64Spec.m in Sources */ = {isa = PBXBuildFile; fileRef = 871CB53B1730E1EA0035E5A6 /* Base64Spec.m */; };
 		876B256C16F307D60041DCE6 /* NSData+ZLIB.m in Sources */ = {isa = PBXBuildFile; fileRef = 876B256B16F307D50041DCE6 /* NSData+ZLIB.m */; };
 		876B256D16F308300041DCE6 /* NSData+ZLIB.m in Sources */ = {isa = PBXBuildFile; fileRef = 876B256B16F307D50041DCE6 /* NSData+ZLIB.m */; };
 		876B257016F31A2D0041DCE6 /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 876B256F16F31A2D0041DCE6 /* NSString+HTML.m */; };
@@ -75,6 +78,9 @@
 		8717F8EB1601EF4900C28FC3 /* KxBitArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KxBitArray.h; sourceTree = "<group>"; };
 		8717F8EC1601EF4900C28FC3 /* KxBitArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KxBitArray.m; sourceTree = "<group>"; };
 		8717F8F116020E1E00C28FC3 /* KxBitArraySpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KxBitArraySpec.m; sourceTree = "<group>"; };
+		871CB5371730E0E80035E5A6 /* KxBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KxBase64.h; sourceTree = "<group>"; };
+		871CB5381730E0E80035E5A6 /* KxBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KxBase64.m; sourceTree = "<group>"; };
+		871CB53B1730E1EA0035E5A6 /* Base64Spec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64Spec.m; sourceTree = "<group>"; };
 		876B256A16F307D50041DCE6 /* NSData+ZLIB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+ZLIB.h"; sourceTree = "<group>"; };
 		876B256B16F307D50041DCE6 /* NSData+ZLIB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+ZLIB.m"; sourceTree = "<group>"; };
 		876B256E16F31A2C0041DCE6 /* NSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HTML.h"; sourceTree = "<group>"; };
@@ -193,6 +199,8 @@
 				876B256F16F31A2D0041DCE6 /* NSString+HTML.m */,
 				87BD447215580F7B0004853F /* KxUtils.h */,
 				87BD447315580F7B0004853F /* KxUtils.m */,
+				871CB5371730E0E80035E5A6 /* KxBase64.h */,
+				871CB5381730E0E80035E5A6 /* KxBase64.m */,
 				87BD445915580EC70004853F /* Supporting Files */,
 			);
 			path = kxtools;
@@ -216,6 +224,7 @@
 				87BD44AA155810320004853F /* NSDictionarySpec.m */,
 				87BD44AB155810320004853F /* NSStringSpec.m */,
 				87BD44AC155810320004853F /* Tuple2Spec.m */,
+				871CB53B1730E1EA0035E5A6 /* Base64Spec.m */,
 				87BD449815580FB40004853F /* Supporting Files */,
 			);
 			path = specs;
@@ -311,6 +320,7 @@
 				8717F8ED1601EF4900C28FC3 /* KxBitArray.m in Sources */,
 				876B256C16F307D60041DCE6 /* NSData+ZLIB.m in Sources */,
 				876B257016F31A2D0041DCE6 /* NSString+HTML.m in Sources */,
+				871CB5391730E0E80035E5A6 /* KxBase64.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -338,6 +348,8 @@
 				876B256D16F308300041DCE6 /* NSData+ZLIB.m in Sources */,
 				876B257116F31A2D0041DCE6 /* NSString+HTML.m in Sources */,
 				876B259716F31FE80041DCE6 /* KxConsole.m in Sources */,
+				871CB53A1730E0F10035E5A6 /* KxBase64.m in Sources */,
+				871CB53C1730E1EA0035E5A6 /* Base64Spec.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
