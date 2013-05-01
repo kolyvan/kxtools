@@ -178,17 +178,14 @@ static NSData * base64decode (NSData * from)
 
 + (NSData *) dataFromBase64String:(NSString *)string
 {
-    NSData * base64 = [NSData dataWithBytes:[string UTF8String]
-                                     length:[string lengthOfBytesUsingEncoding:NSUTF8StringEncoding]];
+    NSData * base64 = [string dataUsingEncoding:NSASCIIStringEncoding];
     return base64decode(base64);
-    
 }
 
 - (NSString *) base64EncodedString
 {
     return [[NSString alloc] initWithData:base64encode(self) encoding:NSASCIIStringEncoding];
 }
-
 
 - (NSData *) base64encode
 {

@@ -44,6 +44,8 @@ describe(@"Base64", ^{
         assertThat([@"IA==" base64decode], equalTo(@" "));
         assertThat([@"" base64decode], equalTo(@""));
         
+        NSString *nonascii = @"Нежной поступью надвьюжной, Снежной россыпью жемчужной,";
+        assertThat([[nonascii base64encode] base64decode], equalTo(nonascii));        
     });
     
 });
