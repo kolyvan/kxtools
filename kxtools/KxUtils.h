@@ -14,6 +14,8 @@
 
 #import <Foundation/Foundation.h>
 
+#define KIND_OF(obj, klazz) [obj isKindOfClass:[klazz class]]
+
 typedef void (^KxUtilsEnumerateItemsBlock)(NSFileManager *fm, NSString *path, NSDictionary *attr);
 
 typedef struct {
