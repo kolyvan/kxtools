@@ -208,4 +208,47 @@
     return result;
 }
 
++ (NSString *)formatSizeWithUnit:(double) value
+{
+#define KILO_FACTOR 1024.0
+#define MEGA_FACTOR 1048576.0
+#define GIGA_FACTOR 1073741824.0
+#define TERA_FACTOR 1099511627776.0
+    
+    if (value < 1.0)
+        return @"0";
+    
+    char *unit;
+    
+    if (value < KILO_FACTOR) {
+        
+        unit = "B";
+        
+    } else if (value < MEGA_FACTOR) {
+        
+        value /= KILO_FACTOR;
+        unit = "KB";
+        
+    } else if (value < GIGA_FACTOR) {
+        
+        value /= MEGA_FACTOR;
+        unit = "MB";
+        
+    } else if (value < TERA_FACTOR) {
+        
+        value /= GIGA_FACTOR;
+        unit = "GB";
+        
+    } else {
+        
+        value /= TERA_FACTOR;
+        unit = "TB";
+    }
+    
+    float integral;
+    if (0 == modff(value, &integral))
+        return [NSString stringWithFormat:@"%.0f%s", integral, unit];
+    return [NSString stringWithFormat:@"%.1f%s", value, unit];
+}
+
 @end

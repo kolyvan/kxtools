@@ -50,4 +50,6 @@
 
 - (NSUInteger) integerValueFromHex;
 
++ (NSString *)formatSizeWithUnit:(double) value;
+
 @end

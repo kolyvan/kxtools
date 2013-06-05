@@ -177,5 +177,13 @@ describe(@"NSString (Kolyvan)", ^{
         assertThatInteger(65535, equalToInteger([@"ffff" integerValueFromHex]));
     });
     
+    it(@"formatSizeWithUnit", ^{
+
+        assertThat([NSString formatSizeWithUnit:0.1], equalTo(@"0"));
+        assertThat([NSString formatSizeWithUnit:64.0], equalTo(@"64B"));
+        assertThat([NSString formatSizeWithUnit:64.0*1024], equalTo(@"64KB"));
+        assertThat([NSString formatSizeWithUnit:64.0*1024*1024], equalTo(@"64MB"));
+        assertThat([NSString formatSizeWithUnit:64.0*1024*1024*1024], equalTo(@"64GB"));
+    });    
 });
 SPEC_END
