@@ -13,6 +13,9 @@
 		871CB5391730E0E80035E5A6 /* KxBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 871CB5381730E0E80035E5A6 /* KxBase64.m */; };
 		871CB53A1730E0F10035E5A6 /* KxBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 871CB5381730E0E80035E5A6 /* KxBase64.m */; };
 		871CB53C1730E1EA0035E5A6 /* Base64Spec.m in Sources */ = {isa = PBXBuildFile; fileRef = 871CB53B1730E1EA0035E5A6 /* Base64Spec.m */; };
+		8728002D175F6949008FCD82 /* NSFileHandle+Kolyvan.m in Sources */ = {isa = PBXBuildFile; fileRef = 8728002C175F6949008FCD82 /* NSFileHandle+Kolyvan.m */; };
+		8728002F175F6A4A008FCD82 /* NSFileHandle+Kolyvan.m in Sources */ = {isa = PBXBuildFile; fileRef = 8728002C175F6949008FCD82 /* NSFileHandle+Kolyvan.m */; };
+		87280031175F6A8D008FCD82 /* NSFileHandleSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 87280030175F6A8D008FCD82 /* NSFileHandleSpec.m */; };
 		876B256C16F307D60041DCE6 /* NSData+ZLIB.m in Sources */ = {isa = PBXBuildFile; fileRef = 876B256B16F307D50041DCE6 /* NSData+ZLIB.m */; };
 		876B256D16F308300041DCE6 /* NSData+ZLIB.m in Sources */ = {isa = PBXBuildFile; fileRef = 876B256B16F307D50041DCE6 /* NSData+ZLIB.m */; };
 		876B257016F31A2D0041DCE6 /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 876B256F16F31A2D0041DCE6 /* NSString+HTML.m */; };
@@ -81,6 +84,9 @@
 		871CB5371730E0E80035E5A6 /* KxBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KxBase64.h; sourceTree = "<group>"; };
 		871CB5381730E0E80035E5A6 /* KxBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KxBase64.m; sourceTree = "<group>"; };
 		871CB53B1730E1EA0035E5A6 /* Base64Spec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64Spec.m; sourceTree = "<group>"; };
+		8728002B175F6949008FCD82 /* NSFileHandle+Kolyvan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileHandle+Kolyvan.h"; sourceTree = "<group>"; };
+		8728002C175F6949008FCD82 /* NSFileHandle+Kolyvan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileHandle+Kolyvan.m"; sourceTree = "<group>"; };
+		87280030175F6A8D008FCD82 /* NSFileHandleSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSFileHandleSpec.m; sourceTree = "<group>"; };
 		876B256A16F307D50041DCE6 /* NSData+ZLIB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+ZLIB.h"; sourceTree = "<group>"; };
 		876B256B16F307D50041DCE6 /* NSData+ZLIB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+ZLIB.m"; sourceTree = "<group>"; };
 		876B256E16F31A2C0041DCE6 /* NSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HTML.h"; sourceTree = "<group>"; };
@@ -201,6 +207,8 @@
 				87BD447315580F7B0004853F /* KxUtils.m */,
 				871CB5371730E0E80035E5A6 /* KxBase64.h */,
 				871CB5381730E0E80035E5A6 /* KxBase64.m */,
+				8728002B175F6949008FCD82 /* NSFileHandle+Kolyvan.h */,
+				8728002C175F6949008FCD82 /* NSFileHandle+Kolyvan.m */,
 				87BD445915580EC70004853F /* Supporting Files */,
 			);
 			path = kxtools;
@@ -225,6 +233,7 @@
 				87BD44AB155810320004853F /* NSStringSpec.m */,
 				87BD44AC155810320004853F /* Tuple2Spec.m */,
 				871CB53B1730E1EA0035E5A6 /* Base64Spec.m */,
+				87280030175F6A8D008FCD82 /* NSFileHandleSpec.m */,
 				87BD449815580FB40004853F /* Supporting Files */,
 			);
 			path = specs;
@@ -321,6 +330,7 @@
 				876B256C16F307D60041DCE6 /* NSData+ZLIB.m in Sources */,
 				876B257016F31A2D0041DCE6 /* NSString+HTML.m in Sources */,
 				871CB5391730E0E80035E5A6 /* KxBase64.m in Sources */,
+				8728002D175F6949008FCD82 /* NSFileHandle+Kolyvan.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,6 +360,8 @@
 				876B259716F31FE80041DCE6 /* KxConsole.m in Sources */,
 				871CB53A1730E0F10035E5A6 /* KxBase64.m in Sources */,
 				871CB53C1730E1EA0035E5A6 /* Base64Spec.m in Sources */,
+				8728002F175F6A4A008FCD82 /* NSFileHandle+Kolyvan.m in Sources */,
+				87280031175F6A8D008FCD82 /* NSFileHandleSpec.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
