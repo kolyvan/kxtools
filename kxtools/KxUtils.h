@@ -60,6 +60,11 @@ typedef struct {
     NSString * (*errorMessage)(NSError *error);
     NSString * (*completeErrorMessage)(NSError *error);
     
+    //
+    
+    BOOL (*saveObjectAsPlist)(id object, NSString * path, NSError **pError);
+    id   (*loadObjectFromPlist)(NSString * path, NSError **pError);
+    
     
 } KxUtils_t;
 

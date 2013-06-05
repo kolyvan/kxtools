@@ -90,32 +90,62 @@ static BOOL ensureDirectory(NSString *path, NSError **perror)
                                error:perror];
 }
 
-static BOOL saveObjectAsJson(id object, NSString *path, NSError **perror)
+static BOOL saveObjectAsJson(id object, NSString * path, NSError **pError)
 {
-    NSCAssert(object, @"nil object");
-    NSCAssert(path.length, @"empty path");
+    NSCParameterAssert(object);
+    NSCParameterAssert(path.length);
     
+    NSError *error;
     NSData *data = [NSJSONSerialization dataWithJSONObject:object
                                                    options:NSJSONWritingPrettyPrinted
-                                                     error:perror];
-
-    if (!data || ![data writeToFile:path options:0 error:perror])
+                                                     error:&error];
+    if (!data) {
+        
+        if (pError) *pError = error;
+        NSLog(@"unable make json from %@, %@", object, error.localizedDescription);
         return NO;
+    }
+    
+    if (![data writeToFile:path options:0 error:pError]) {
+        
+        if (pError) *pError = error;
+        NSLog(@"unable save json at %@, %@", path, error.localizedDescription);
+        return NO;
+    }
+    
     return YES;
 }
 
-static id loadObjectFromJson(NSString *path, NSError **perror)
+
+static id loadObjectFromJson(NSString * path, NSError **pError)
 {
-    NSCAssert(path.length, @"empty path");
+    NSCParameterAssert(path.length);
     
-    NSData *data = [NSData dataWithContentsOfFile:path options:0 error:perror];
-    if (!data)
+    NSFileManager *fm = [[NSFileManager alloc] init];
+    if (![fm isReadableFileAtPath:path])
         return nil;
+    
+    NSError *error;
+    NSData *data = [NSData dataWithContentsOfFile:path options:0 error:&error];
+    if (!data) {
+        
+        if (pError) *pError = error;
+        NSLog(@"unable load data from %@, %@", path, error.localizedDescription);
+        return nil;
+    }
     
     if (!data.length)
         return [NSNull null];
     
-    return [NSJSONSerialization JSONObjectWithData:data options:0 error:perror];
+    id object = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+    if (!object) {
+        
+        if (pError) *pError = error;
+        NSLog(@"unable make object from json, %@", error.localizedDescription);
+        return NO;
+    }
+    
+    return object;
 }
 
 static void enumerateItemsAtPath(NSString *path,
@@ -312,7 +342,7 @@ static NSString * pathForResource(NSString * file)
     return [resourcePath() stringByAppendingPathComponent:file];
 }
 
-///// 
+////
 
 static void waitRunLoop (NSTimeInterval secondsToWait, NSTimeInterval interval, BOOL (^condition)(void)) {
     
@@ -332,6 +362,72 @@ static void waitRunLoop (NSTimeInterval secondsToWait, NSTimeInterval interval, 
 }
 
 ////
+
+static BOOL saveObjectAsPlist(id object, NSString * path, NSError **pError)
+{
+    NSCParameterAssert(object);
+    NSCParameterAssert(path.length);
+    
+    NSError *error;
+    NSData *data = [NSPropertyListSerialization dataWithPropertyList:object
+                                                              format:NSPropertyListBinaryFormat_v1_0
+                    // format:NSPropertyListXMLFormat_v1_0
+                                                             options:0
+                                                               error:&error];
+    if (!data) {
+        
+        if (pError) *pError = error;
+        NSLog(@"unable make plist from %@, %@", object, error.localizedDescription);
+        return NO;
+    }
+    
+    if (![data writeToFile:path options:0 error:pError]) {
+        
+        if (pError) *pError = error;
+        NSLog(@"unable save plist at %@, %@", path, error.localizedDescription);
+        return NO;
+    }
+    
+    return YES;
+}
+
+static id loadObjectFromPlist(NSString * path, NSError **pError)
+{
+    NSCParameterAssert(path.length);
+    
+    NSFileManager *fm = [[NSFileManager alloc] init];
+    if (![fm isReadableFileAtPath:path])
+        return nil;
+    
+    NSError *error;
+    NSData *data = [NSData dataWithContentsOfFile:path options:0 error:&error];
+    if (!data) {
+        
+        if (pError) *pError = error;
+        NSLog(@"unable load data from %@, %@", path, error.localizedDescription);
+        return nil;
+    }
+    
+    if (!data.length)
+        return [NSNull null];
+    
+    
+    id object = [NSPropertyListSerialization propertyListWithData:data
+                                                          options:NSPropertyListImmutable
+                                                           format:nil
+                                                            error:&error];
+    
+    if (!object) {
+        
+        if (pError) *pError = error;
+        NSLog(@"unable make object from plist, %@", error.localizedDescription);
+        return NO;
+    }
+    
+    return object;
+}
+
+/////
 
 KxUtils_t KxUtils = {
 
@@ -367,6 +463,10 @@ KxUtils_t KxUtils = {
     //
     errorMessage,
     completeErrorMessage,
+    
+    //
+    saveObjectAsPlist,
+    loadObjectFromPlist,
     
 };
 
