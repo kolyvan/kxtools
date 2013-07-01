@@ -370,8 +370,8 @@ static BOOL saveObjectAsPlist(id object, NSString * path, NSError **pError)
     
     NSError *error;
     NSData *data = [NSPropertyListSerialization dataWithPropertyList:object
-                                                              format:NSPropertyListBinaryFormat_v1_0
-                    // format:NSPropertyListXMLFormat_v1_0
+                                                              //format:NSPropertyListBinaryFormat_v1_0
+                                                              format:NSPropertyListXMLFormat_v1_0
                                                              options:0
                                                                error:&error];
     if (!data) {
@@ -381,7 +381,7 @@ static BOOL saveObjectAsPlist(id object, NSString * path, NSError **pError)
         return NO;
     }
     
-    if (![data writeToFile:path options:0 error:pError]) {
+    if (![data writeToFile:path options:0 error:&error]) {
         
         if (pError) *pError = error;
         NSLog(@"unable save plist at %@, %@", path, error.localizedDescription);
