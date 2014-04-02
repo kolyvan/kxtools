@@ -237,7 +237,7 @@
         for (id p in obj)
             [self addObject:p];    
     }
-    else if ([obj respondsToSelector:@selector(objectEnumerator:)]) {
+    else if ([obj respondsToSelector:@selector(objectEnumerator)]) {
         
         NSEnumerator *enumerator = [obj objectEnumerator];
         id p;
